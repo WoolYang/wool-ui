@@ -1,0 +1,25 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "outDir": "./lib/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "module": "commonjs",
+        "target": "es6",
+        "jsx": "react",
+        "baseUrl": ".",
+        "paths": {
+            "components": [
+                "src/components"
+            ]
+        }
+    },
+    "include": [
+        "./src/**/*",
+        "./examples/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

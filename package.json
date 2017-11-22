@@ -1,0 +1,74 @@
+{
+  "name": "wool-ui",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/Drawer.js",
+  "scripts": {
+    "build": "rimraf lib && webpack --config webpack.config.build.js --progress",
+    "start": "webpack-dev-server --inline  --config webpack.config.dev.js ",
+    "test": "mocha --color --require ignore-styles --require babel-core/register ./test/setup.js --recursive ./test/source",
+    "test:watch": "npm test -- --watch",
+    "eslint": "eslint src",
+    "pub": "npm version patch &&  npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WoolYang/wool-ui"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "WoolYang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WoolYang/wool-ui/issues"
+  },
+  "homepage": "https://github.com/WoolYang/wool-ui#readme",
+  "dependencies": {
+    "classnames": "^2.2.5"
+  },
+  "devDependencies": {
+    "@types/react": "^16.0.25",
+    "@types/react-dom": "^16.0.3",
+    "autoprefixer": "^7.1.6",
+    "awesome-typescript-loader": "^3.4.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "css-loader": "^0.28.7",
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^11.3.0",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "mocha": "^4.0.1",
+    "nyan-progress-webpack-plugin": "^1.2.0",
+    "open-browser-webpack-plugin": "^0.0.5",
+    "postcss": "^6.0.14",
+    "postcss-loader": "^2.0.8",
+    "raf": "^3.4.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.1.0",
+    "rimraf": "2.5.4",
+    "sinon": "^4.1.2",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.19.0",
+    "typescript": "^2.6.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-server": "^2.9.4",
+    "webpack-hot-middleware": "^2.20.0"
+  },
+  "browserslist": [
+    "Android >= 4",
+    "not ie < 11",
+    "iOS >= 7"
+  ]
+}
