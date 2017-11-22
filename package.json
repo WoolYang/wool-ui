@@ -25,7 +25,10 @@
   },
   "homepage": "https://github.com/WoolYang/wool-ui#readme",
   "dependencies": {
-    "classnames": "^2.2.5"
+    "@types/classnames": "^2.2.3",
+    "@types/prop-types": "^15.5.2",
+    "classnames": "^2.2.5",
+    "prop-types": "^15.6.0"
   },
   "devDependencies": {
     "@types/react": "^16.0.25",

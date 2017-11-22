@@ -29,7 +29,7 @@ module.exports = {
             loader: "source-map-loader",
             exclude: /node_modules/
         }, {
-            test: /\.js?$/,
+            test: /\.(jsx|js)?$/,
             exclude: /node_modules/,
             use: 'babel-loader'
         }, {
