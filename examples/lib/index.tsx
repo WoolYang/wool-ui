@@ -7,7 +7,7 @@ class Example extends React.Component {
     render() {
         return (
             <div>
-                <Button compiler="TypeScript" framework="React" />
+                <Button />
                 <Hello compiler="TypeScript" framework="React" />
             </div>
         )
