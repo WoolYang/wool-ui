@@ -1,0 +1,292 @@
+/* 全局配置 */
+/* padding和margin */
+.make-pdt(60);
+.make-pdt(@n, @i: 0) when (@i =< @n) {
+  .pdt@{i} {
+    padding-top: (@i*1px) !important;
+  }
+  .make-pdt(@n, (@i + 1));
+}
+
+.make-pdr(60);
+.make-pdr(@n, @i: 0) when (@i =< @n) {
+  .pdr@{i} {
+    padding-right: (@i*1px) !important;;
+  }
+  .make-pdr(@n, (@i + 1));
+}
+
+.make-pdb(60);
+.make-pdb(@n, @i: 0) when (@i =< @n) {
+  .pdb@{i} {
+    padding-bottom: (@i*1px) !important;;
+  }
+  .make-pdb(@n, (@i + 1));
+}
+
+.make-pdl(60);
+.make-pdl(@n, @i: 0) when (@i =< @n) {
+  .pdl@{i} {
+    padding-left: (@i*1px) !important;;
+  }
+  .make-pdl(@n, (@i + 1));
+}
+
+.make-mgt(60);
+.make-mgt(@n, @i: -10) when (@i =< @n) {
+  .mgt@{i} {
+    margin-top: (@i*1px) !important;;
+  }
+  .make-mgt(@n, (@i + 1));
+}
+
+.make-mgr(60);
+.make-mgr(@n, @i: 0) when (@i =< @n) {
+  .mgr@{i} {
+    margin-right: (@i*1px) !important;;
+  }
+  .make-mgr(@n, (@i + 1));
+}
+
+.make-mgb(60);
+.make-mgb(@n, @i: 0) when (@i =< @n) {
+  .mgb@{i} {
+    margin-bottom: (@i*1px) !important;;
+  }
+  .make-mgb(@n, (@i + 1));
+}
+
+.make-mgl(60);
+.make-mgl(@n, @i: 0) when (@i =< @n) {
+  .mgl@{i} {
+    margin-left: (@i*1px) !important;;
+  }
+  .make-mgl(@n, (@i + 1));
+}
+
+.hide {
+  display: none
+}
+
+.show {
+  display: block
+}
+
+.clearfix:after, .clearfix:before {
+  content: "";
+  display: table
+}
+
+.clearfix:after {
+  clear: both
+}
+
+.fl {
+  float: left !important
+}
+
+.fr {
+  float: right
+}
+
+.fn {
+  float: none
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.break {
+  word-break: break-all;
+  word-wrap: break-word
+}
+
+.ds-b {
+  display: block;
+}
+
+.ds-i {
+  display: inline;
+}
+
+.ds-ib {
+  display: inline-block;
+}
+
+.ps-a {
+  position: absolute;
+}
+
+.ps-r {
+  position: relative;
+}
+
+.text-center {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.text-left {
+  text-align: left
+}
+
+.text-right {
+  text-align: right
+}
+
+.bold {
+  font-weight: 500
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.center {
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  -webkit-box-orient: vertical;
+}
+
+/* 垂直居中 */
+.center-hor {
+  display: table;
+  &.full-screen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+  }
+  .center-hor-body {
+    display: table-cell;
+    vertical-align: middle;
+    > * {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+.center-hor-flex {
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  text-align: center;
+  &.full-screen {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 9;
+  }
+}
+
+/* 栅格*/
+.make-col(@i) when (@i > 1) {
+  .col-@{i} {
+    float: left;
+    padding-left: 15px;
+    position: relative;
+    width: (@i*(100%/12));
+  }
+  .make-col((@i - 1));
+}
+
+.row {
+  padding-left: 0;
+  padding-right: 15px;
+  overflow: hidden;
+  padding-top: 10px;
+  .make-col(12);
+  &:after {
+    clear: both;
+    content: "";
+    display: table
+  }
+  &:before {
+    content: "";
+    display: table
+  }
+}
+
+/* flex 栅格 */
+.flex {
+  display: -webkit-box;
+  width: 100%;
+  .col-1 {
+    float: none;
+    width: auto;
+    position: relative;
+    -webkit-box-flex: 1
+  }
+  .col-2 {
+    position: relative;
+    -webkit-box-flex: 2
+  }
+  .col-3 {
+    position: relative;
+    -webkit-box-flex: 3
+  }
+  .col-4 {
+    position: relative;
+    -webkit-box-flex: 4
+  }
+}
+
+.top1 {
+  position: relative;
+  top: 1px;
+}
+
+.top-1 {
+  position: relative;
+  top: -1px;
+}
+
+.top2 {
+  position: relative;
+  top: 2px;
+}
+
+.top-2 {
+  position: relative;
+  top: -2px;
+}
+
+.scroll {
+  position: relative;
+  .refresh {
+    position: absolute;
+    top: 0;
+  }
+}
+
+.shadow-top {
+  box-shadow: 0px -1px 0px 0px @dark-separator, 0px -1px 25px 0px rgba(102, 99, 92, 0.15);
+}
+
+.userName{
+  position: fixed;
+  bottom: 106px;
+  transform: rotate(-30deg);
+  -webkit-transform: rotate(-30deg);
+  font-size: 50px;
+  color: #ccc;
+  right: 20px;
+  opacity: 0.4;
+  position:fixed;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.no-data{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  top: 40%;
+}
