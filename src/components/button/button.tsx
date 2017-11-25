@@ -3,17 +3,24 @@ import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
 import './style/button.less';
 
+export type ButtonSize = 'default' | 'large' | 'medium' | 'small';
+export type ButtonType = 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text';
+export type ButtonNativeType = 'button' | 'submit' | 'reset';
+
 export interface ButtonProps {
-    size?: string;
-    type?: string;
+    size?: ButtonSize;
+    type?: ButtonType;
     plain?: boolean;
     round?: boolean;
-    loading?: boolean;
+    loading?: boolean; //暂未实现
     disabled?: boolean;
     icon?: string;
     autofocus?: boolean;
-    nativeType?: string;
+    nativeType?: ButtonNativeType;
     onClick?: React.FormEventHandler<any>;
+    style?: React.CSSProperties;
+    className?: string;
+    prefixCls?: string;
 }
 
 class Button extends React.Component<ButtonProps, any> {
@@ -27,11 +34,15 @@ class Button extends React.Component<ButtonProps, any> {
         disabled: false,
         icon: '',
         autofocus: false,
-        nativeType: 'button'
+        nativeType: 'button',
+        onClick: () => { },
+        className: '',
+        style: {},
+        prefixCls: 'wool-btn',
     };
 
     static propTypes = {
-        size: PropTypes.oneOf(['default', 'big', 'medium', 'small']),
+        size: PropTypes.oneOf(['default', 'large', 'medium', 'small']),
         type: PropTypes.oneOf(['default', 'primary', 'success', 'warning', 'danger', 'info', 'text']),
         plain: PropTypes.bool,
         round: PropTypes.bool,
@@ -40,24 +51,54 @@ class Button extends React.Component<ButtonProps, any> {
         icon: PropTypes.string,
         autofocus: PropTypes.bool,
         nativeType: PropTypes.oneOf(['button', 'submit', 'reset']),
-        onClick: PropTypes.func
+        onClick: PropTypes.func,
+        className: PropTypes.string,
+        style: PropTypes.object,
+        prefixCls: PropTypes.string
     };
 
     handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        const onClick = this.props.onClick;
-        if (onClick) {
-            onClick(e);
-        }
+        this.props.onClick(e);
     }
 
     render() {
+
+        const {
+            size,
+            type,
+            plain,
+            round,
+            loading,
+            disabled,
+            icon,
+            autofocus,
+            nativeType,
+            onClick,
+            prefixCls,
+            className,
+            style,
+            children
+        } = this.props;
+
+        const classes = classNames(
+            prefixCls,
+            className,
+            `${prefixCls}-${size}`,
+            `${prefixCls}-${type}`,
+            plain && '`${prefixCls}-plain',
+            round && '`${prefixCls}-round',
+        );
+
         return <button
-            className="el-button"
-            disabled={true}
+            type={nativeType}
+            className={classes}
+            disabled={disabled}
+            autoFocus={autofocus}
+            style={style}
             onClick={this.handleClick}
         >
-            确认
-                </button>;
+            {children}
+        </button>;
     }
 }
 
