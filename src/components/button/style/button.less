@@ -1,4 +1,24 @@
 @import "../../../style/variables";
+
+/* 按钮主题色 */
+
+.btn-theme (@normal1, @normal2, @normal3, @hover1, @hover2, @hover3, @active1, @active2, @active3) {
+    background: @normal1;
+    border-color: @normal2;
+    color: @normal3;
+    &:hover,
+    &:focus {
+        background: @hover1;
+        border-color: @hover2;
+        color: @hover3;
+    }
+    &:active {
+        background: @active1;
+        border-color: @active2;
+        color: @active3;
+    }
+}
+
 .wool-btn {
     display: inline-block;
     padding: 12px 20px;
@@ -9,20 +29,15 @@
     text-align: center;
     white-space: nowrap;
     cursor: pointer;
-    background: @white;
     border: 1px solid @grey4;
-    color: @grey8;
     -webkit-appearance: none;
     outline: none;
     transition: .1s;
     user-select: none;
-    &:hover,
-    &:focus {
-        background: @white;
-        border-color: @lightBlue2;
-        color: @lightBlue7;
+    &.wool-btn-default {
+        .btn-theme: (@white, @grey4, @grey8, @white, @lightBlue2, @lightBlue7, @white, @lightBlue5, @grey8);
     }
-    &:active {
-        border-color: @lightBlue5;
+    &.wool-btn-primary {
+        .btn-theme (@lightBlue4, @lightBlue4, @white, @lightBlue2, @lightBlue2, @white, @lightBlue7, @lightBlue7, @white);
     }
 }

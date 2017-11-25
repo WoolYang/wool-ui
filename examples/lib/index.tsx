@@ -8,6 +8,7 @@ class Example extends React.Component {
         return (
             <div>
                 <Button>默认按钮</Button>
+                <Button type="primary" >主要按钮</Button>
                 <Hello compiler="TypeScript" framework="React" />
             </div>
         )
