@@ -43,6 +43,12 @@ module.exports = {
                     loader: 'less-loader'
                 }]
             })
+        }, {
+            test: /\.(png|jpg|jpeg|gif)$/,
+            use: "url-loader?limit=40000&name=images/[name].[hash].[ext]"
+        }, {
+            test: /\.(svg|ttf|eot|svg|woff(\(?2\)?)?)(\?[a-zA-Z_0-9.=&]*)?(#[a-zA-Z_0-9.=&]*)?$/,
+            use: "file-loader?name=fonts/[name].[ext]"
         }]
     },
     plugins: [
