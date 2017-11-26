@@ -19,6 +19,14 @@
     }
 }
 
+
+/* 朴素颜色 */
+
+.btn-plain (@background) {
+    background: @white;
+    color: @background;
+}
+
 .wool-btn {
     display: inline-block;
     padding: 12px 20px;
@@ -51,5 +59,39 @@
     }
     &.wool-btn-info {
         .btn-theme (@grey4, @grey4, @white, @grey3, @grey3, @white, @grey7, @grey7, @white);
+    }
+    &.wool-btn-text {
+        .btn-theme (@white, @white, @lightBlue4, @white, @white, @lightBlue2, @white, @white, @lightBlue2);
+    }
+    &.wool-btn-plain-default {
+        .btn-plain(@grey8)
+    }
+    &.wool-btn-plain-primary {
+        .btn-plain(@lightBlue4)
+    }
+    &.wool-btn-plain-success {
+        .btn-plain(@green4)
+    }
+    &.wool-btn-plain-warning {
+        .btn-plain(@amber4)
+    }
+    &.wool-btn-plain-danger {
+        .btn-plain(@red4)
+    }
+    &.wool-btn-plain-info {
+        .btn-plain(@grey4)
+    }
+    &.wool-btn-round {
+        border-radius: 20px;
+        padding: 12px 23px;
+    }
+    &.wool-btn-medium {
+        padding: 10px 20px;
+    }
+    &.wool-btn-small {
+        padding: 9px 15px;
+    }
+    &.wool-btn-mini {
+        padding: 7px 15px;
     }
 }

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
 import './style/button.less';
 
-export type ButtonSize = 'default' | 'large' | 'medium' | 'small';
+export type ButtonSize = 'normal' | 'medium' | 'small' | 'mini';
 export type ButtonType = 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text';
 export type ButtonNativeType = 'button' | 'submit' | 'reset';
 
@@ -26,7 +26,7 @@ export interface ButtonProps {
 class Button extends React.Component<ButtonProps, any> {
 
     static defaultProps = {
-        size: 'default',
+        size: 'normal',
         type: 'default',
         plain: false,
         round: false,
@@ -42,7 +42,7 @@ class Button extends React.Component<ButtonProps, any> {
     };
 
     static propTypes = {
-        size: PropTypes.oneOf(['default', 'large', 'medium', 'small']),
+        size: PropTypes.oneOf(['normal', 'medium', 'small', 'mini']),
         type: PropTypes.oneOf(['default', 'primary', 'success', 'warning', 'danger', 'info', 'text']),
         plain: PropTypes.bool,
         round: PropTypes.bool,
@@ -85,8 +85,8 @@ class Button extends React.Component<ButtonProps, any> {
             className,
             `${prefixCls}-${size}`,
             `${prefixCls}-${type}`,
-            plain && '`${prefixCls}-plain',
-            round && '`${prefixCls}-round',
+            plain && `${prefixCls}-plain-${type}`,
+            round && `${prefixCls}-round`,
         );
 
         return <button
