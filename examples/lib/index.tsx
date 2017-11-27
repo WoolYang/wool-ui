@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Hello, Button } from '../../src/components/index';
+import { Hello, Button, Icon } from '../../src/components/index';
 import '../style/style.less'
 
 class Example extends React.Component {
@@ -39,6 +39,7 @@ class Example extends React.Component {
                     <Button size="small" >小型按钮</Button>
                     <Button size="mini" >超小按钮</Button>
                 </div>
+                <Icon name="spinner6" spin={true} />
                 <Hello compiler="TypeScript" framework="React" />
             </div>
         )
