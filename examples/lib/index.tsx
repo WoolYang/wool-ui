@@ -39,6 +39,11 @@ class Example extends React.Component {
                     <Button size="small" >小型按钮</Button>
                     <Button size="mini" >超小按钮</Button>
                 </div>
+                <div>
+                    <Button type="primary" icon="home" >主要</Button>
+                    <Button type="success" icon="home" ></Button>
+                    <Button type="warning" loading={true} >加载</Button>
+                </div>
                 <Icon name="spinner6" spin={true} />
                 <Hello compiler="TypeScript" framework="React" />
             </div>

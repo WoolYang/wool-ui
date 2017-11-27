@@ -14,10 +14,10 @@ export interface IconProps {
 class Icon extends React.Component<IconProps, any> {
 
     static defaultProps = {
-        name: '',
-        spin: false,
-        className: '',
-        style: {}
+        name: '', //图标名称
+        spin: false,  //是否旋转
+        className: '',  //class
+        style: {}  //sytle
     };
 
     static propTypes = {
