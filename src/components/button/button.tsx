@@ -48,7 +48,7 @@ class Button extends React.Component<ButtonProps, any> {
         round: PropTypes.bool,
         loading: PropTypes.bool,
         disabled: PropTypes.bool,
-        icon: PropTypes.string,
+        icon: PropTypes.node,
         autofocus: PropTypes.bool,
         nativeType: PropTypes.oneOf(['button', 'submit', 'reset']),
         onClick: PropTypes.func,
