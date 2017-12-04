@@ -24,7 +24,7 @@ export interface ButtonProps {
     prefixCls?: string;  //前缀
 }
 
-class Button extends React.Component<ButtonProps, any> {
+export class Button extends React.Component<ButtonProps, any> {
     static defaultProps = {
         size: 'normal',
         type: 'default',
@@ -105,5 +105,3 @@ class Button extends React.Component<ButtonProps, any> {
         </button>;
     }
 }
-
-export { Button };

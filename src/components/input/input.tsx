@@ -6,9 +6,15 @@ import './style/input.less';
 export type InputSize = 'default' | 'medium' | 'small' | 'mini';
 export type InputAutoComplete = 'off' | 'on';
 
-export interface InputProps {
+export interface AbstractInputProps {
+    prefixCls?: string;
+    className?: string;
+    value?: any;
+    style?: React.CSSProperties;
+}
+
+export interface InputProps extends AbstractInputProps {
     type?: string;
-    value?: number | string;
     maxLength?: number;
     minLength?: number;
     placeholder?: string;
@@ -46,7 +52,8 @@ export class Input extends React.Component<InputProps, any> {
         autoSize: false,
         autoComplete: "off",
         readOnly: false,
-        autoFocus: false
+        autoFocus: false,
+        prefixCls: 'wool-input',
     }
 
     static propTypes = {
@@ -108,12 +115,39 @@ export class Input extends React.Component<InputProps, any> {
         }
     }
 
-    renderLabeledInput(children: any) {
+    renderLabeledInput(children: React.ReactElement<any>) {
         const props = this.props;
         if ((!props.addonBefore && !props.addonAfter)) {
             return children;
         }
-    };
+    }
+
+    renderLabeledIcon(children: React.ReactElement<any>) {
+        const props = this.props;
+        if ((!props.prefix && !props.suffix)) {
+            return children;
+        }
+
+        const prefix = props.prefix ? (
+            <span className={`${props.prefixCls}-prefix`}>
+                {props.prefix}
+            </span>
+        ) : null;
+
+        const suffix = props.suffix ? (
+            <span className={`${props.prefixCls}-suffix`}>
+                {props.suffix}
+            </span>
+        ) : null;
+
+        return (
+            <div className={`${props.prefixCls}-wrapper`} >
+                {prefix}
+                {children}
+                {suffix}
+            </div>
+        )
+    }
 
     renderInput() {
         const {
@@ -130,12 +164,23 @@ export class Input extends React.Component<InputProps, any> {
             name,
             readOnly,
             autoFocus,
-            form
+            form,
+            className,
+            prefixCls,
+            size
         } = this.props;
 
-        return (
+        const classes = classNames(
+            prefixCls,
+            `${prefixCls}-${size}`,
+            disabled && `${prefixCls}-disabled`,
+            className
+        );
+
+        return this.renderLabeledIcon(
             <input
                 ref="input"
+                className={classes}
                 type={type}
                 value={value}
                 maxLength={maxLength}

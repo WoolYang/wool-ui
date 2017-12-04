@@ -4,9 +4,12 @@ html {
     font-size: calc(100vw/3.75);
 }
 
+
+/* body样式 */
+
 body {
     font-family: SFUIDisplay-Bold, PingFang-SC-Medium, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
-    line-height: 1.5;
+    line-height: 1;
     font-size: @h5;
     color: @black;
     background-color: @white;
@@ -15,6 +18,32 @@ body {
     -webkit-tap-highlight-color: transparent;
     outline: 0;
 }
+
+
+/* placeholder颜色 */
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: @grey4;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+    color: @grey4;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+    color: @grey4;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: @grey4;
+}
+
+
+/*标题字体*/
 
 .h1 {
     font-size: @h1;
@@ -42,12 +71,4 @@ body {
 
 .h7 {
     font-size: @h7;
-}
-
-.lh14 {
-    line-height: @h5;
-}
-
-.lh16 {
-    line-height: @h3;
 }

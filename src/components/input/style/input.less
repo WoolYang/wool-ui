@@ -1,0 +1,63 @@
+@import "../../../style/variables";
+.wool-input-wrapper {
+    position: relative;
+    .input-common-fix {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .wool-input-prefix {
+        &:extend(.wool-input-wrapper .input-common-fix);
+        left: 3%;
+    }
+    .wool-input-suffix {
+        &:extend(.wool-input-wrapper .input-common-fix);
+        right: 3%;
+    }
+    .wool-input {
+        padding: 0 22px;
+    }
+}
+
+.wool-input {
+    position: relative;
+    font-size: 14px;
+    display: inline-block;
+    -webkit-appearance: none;
+    background-color: @white;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid @grey3;
+    box-sizing: border-box;
+    color: @grey8;
+    height: 40px;
+    line-height: 1;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    width: 100%;
+    &:hover {
+        border-color: @grey4;
+    }
+    &:focus {
+        border-color: @lightBlue4;
+    }
+    &.wool-input-medium {
+        height: 35px;
+    }
+    &.wool-input-small {
+        height: 30px;
+    }
+    &.wool-input-mini {
+        height: 20px;
+    }
+    &.wool-input-disabled {
+        opacity: 0.5;
+        background-color: @grey1;
+        &:hover {
+            cursor: not-allowed;
+            border-color: @grey3;
+        }
+    }
+}
