@@ -120,6 +120,27 @@ export class Input extends React.Component<InputProps, any> {
         if ((!props.addonBefore && !props.addonAfter)) {
             return children;
         }
+
+        const addonBefore = props.addonBefore ? (
+            <span className={`${props.prefixCls}-before`}>
+                {props.addonBefore}
+            </span>
+        ) : null;
+
+        const addonAfter = props.addonAfter ? (
+            <span className={`${props.prefixCls}-after`}>
+                {props.addonAfter}
+            </span>
+        ) : null;
+
+        return (
+            <div className={`${props.prefixCls}-label-wrapper`} >
+                {addonBefore}
+                {children}
+                {addonAfter}
+            </div>
+        )
+
     }
 
     renderLabeledIcon(children: React.ReactElement<any>) {

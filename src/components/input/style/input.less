@@ -1,4 +1,25 @@
 @import "../../../style/variables";
+.wool-input-label-wrapper {
+    display: table;
+    .wool-input-before,
+    .wool-input-after {
+        display: table-cell;
+        border: 1px solid @grey3;
+        background: @grey1;
+        padding: 0 10px;
+    }
+    .wool-input:not(:first-child) {
+        display: table-cell;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+    .wool-input:not(:last-child) {
+        display: table-cell;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
+
 .wool-input-wrapper {
     position: relative;
     .input-common-fix {
