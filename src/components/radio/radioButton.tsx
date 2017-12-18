@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
 import './style/radio.less';
 
-export interface RadioProps {
+export interface RadioButtonProps {
     prefixCls?: string;
     checked?: boolean;
     value?: string | number | boolean;
@@ -12,12 +12,12 @@ export interface RadioProps {
     model?: string | number | boolean;
 }
 
-export class Radio extends React.Component<RadioProps, any> {
+export class RadioButton extends React.Component<RadioButtonProps, any> {
 
     static defaultProps = {
         checked: false,
         disabled: false,
-        prefixCls: 'wool-radio'
+        prefixCls: 'wool-radio-button'
     };
 
     static propTypes = {
@@ -44,7 +44,7 @@ export class Radio extends React.Component<RadioProps, any> {
         }
     }
 
-    getChecked(props: RadioProps): boolean {
+    getChecked(props: RadioButtonProps): boolean {
         return props.model == props.value || Boolean(props.checked)
     }
 
@@ -71,14 +71,14 @@ export class Radio extends React.Component<RadioProps, any> {
         const { checked } = this.state;
 
         const classes = classNames(
-            `${prefixCls}-wrapper`,
+            `${prefixCls}`,
             checked && `${prefixCls}-checked`,
             disabled && `${prefixCls}-disabled`,
         )
 
         return (
-            <label className={`${prefixCls}`} >
-                <span className={classes}>
+            <label className={classes} >
+                <span className={`${prefixCls}-wrapper`}>
                     <input
                         type="radio"
                         className={`${prefixCls}-input`}
@@ -86,9 +86,8 @@ export class Radio extends React.Component<RadioProps, any> {
                         disabled={disabled}
                         onChange={this.handleChange}
                     />
-                    <span className={`${prefixCls}-inner`} ></span>
                 </span>
-                <span>{children || value}</span>
+                <span className={`${prefixCls}-label`} >{children || value}</span>
             </label>
         )
     }
