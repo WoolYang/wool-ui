@@ -28,7 +28,7 @@ export class RadioButton extends React.Component<RadioButtonProps, any> {
         onChange: PropTypes.func,
     };
 
-    constructor(props: Object) {
+    constructor(props: RadioButtonProps) {
         super(props);
 
         this.state = {
@@ -36,7 +36,7 @@ export class RadioButton extends React.Component<RadioButtonProps, any> {
         };
     }
 
-    componentWillReceiveProps(nextProps: Object) {
+    componentWillReceiveProps(nextProps: RadioButtonProps) {
         const checked = this.getChecked(nextProps);
 
         if (this.state.checked != checked) {

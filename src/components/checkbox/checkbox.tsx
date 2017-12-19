@@ -1,59 +1,56 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
-import './style/radio.less';
+import './style/checkbox.less';
 
-export interface RadioProps {
+export interface CheckboxProps {
     prefixCls?: string;
     checked?: boolean;
-    value?: string | number | boolean;
+    value?: any;
     disabled?: boolean;
+    indeterminate?: boolean;
     onChange?: any;
-    model?: string | number | boolean;
+    children?: React.ReactNode;
 }
 
-export class Radio extends React.Component<RadioProps, any> {
+export class Checkbox extends React.Component<CheckboxProps, any> {
+
+    static propTypes = {
+        checked: PropTypes.bool,
+        value: PropTypes.any,
+        disabled: PropTypes.bool,
+        indeterminate: PropTypes.bool,
+        onChange: PropTypes.func,
+    };
 
     static defaultProps = {
         checked: false,
         disabled: false,
-        prefixCls: 'wool-radio'
+        indeterminate: false,
+        prefixCls: 'wool-checkbox'
     };
 
-    static propTypes = {
-        checked: PropTypes.bool,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-        model: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-        disabled: PropTypes.bool,
-        onChange: PropTypes.func,
-    };
-
-    constructor(props: RadioProps) {
+    constructor(props: CheckboxProps) {
         super(props);
 
         this.state = {
-            checked: this.getChecked(props)
+            checked: this.props.checked,
         };
     }
 
-    componentWillReceiveProps(nextProps: RadioProps) {
-        const checked = this.getChecked(nextProps);
 
-        if (this.state.checked != checked) {
-            this.setState({ checked });
-        }
-    }
-
-    getChecked(props: RadioProps): boolean {
-        return props.model == props.value || Boolean(props.checked)
+    componentWillReceiveProps(nextProps: CheckboxProps) {
+        this.setState({
+            checked: nextProps.checked
+        })
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked;
 
-        const { onChange, value } = this.props;
-        if (onChange && checked) {
-            onChange(value);
+        const { onChange, value, children } = this.props;
+        if (onChange) {
+            onChange({ label: children, value: value });
         }
         this.setState({ checked });
     }
@@ -64,7 +61,7 @@ export class Radio extends React.Component<RadioProps, any> {
         const {
             prefixCls,
             disabled,
-            value,
+            indeterminate,
             children
         } = this.props;
 
@@ -74,13 +71,14 @@ export class Radio extends React.Component<RadioProps, any> {
             `${prefixCls}-wrapper`,
             checked && `${prefixCls}-checked`,
             disabled && `${prefixCls}-disabled`,
+            indeterminate && `${prefixCls}-indeterminate`,
         )
 
         return (
             <label className={`${prefixCls}`} >
                 <span className={classes}>
                     <input
-                        type="radio"
+                        type="checkbox"
                         className={`${prefixCls}-input`}
                         checked={checked}
                         disabled={disabled}
@@ -88,7 +86,7 @@ export class Radio extends React.Component<RadioProps, any> {
                     />
                     <span className={`${prefixCls}-inner`} ></span>
                 </span>
-                <span>{children || value}</span>
+                <span>{children}</span>
             </label>
         )
     }
