@@ -4,6 +4,7 @@ import { ButtonDemo } from './components/button';
 import { InputDemo } from './components/input';
 import { RadioDemo } from './components/radio';
 import { CheckboxDemo } from './components/checkbox';
+import { GridDemo } from './components/grid';
 
 import '../style/style.less'
 

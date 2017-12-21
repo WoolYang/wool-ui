@@ -4,6 +4,7 @@ import { Icon } from './icon/index';
 import { Input } from './input/index';
 import { Radio, RadioGroup, RadioButton } from './radio/index';
 import { Checkbox, CheckboxGroup } from './checkbox/index';
+import { Row, Col } from './grid/index';
 
 import "../style/public.less";
 
@@ -16,5 +17,7 @@ export {
     RadioGroup,
     RadioButton,
     Checkbox,
-    CheckboxGroup
+    CheckboxGroup,
+    Row,
+    Col
 };
