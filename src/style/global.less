@@ -93,7 +93,7 @@
 }
 
 .fl {
-    float: left !important
+    float: left
 }
 
 .fr {
@@ -195,62 +195,6 @@
         top: 0;
         bottom: 0;
         z-index: 9;
-    }
-}
-
-
-/* 栅格*/
-
-.make-col(@i) when (@i > 1) {
-    .col-@{i} {
-        float: left;
-        padding-left: 15px;
-        position: relative;
-        width: (@i*(100%/12));
-    }
-    .make-col((@i - 1));
-}
-
-.row {
-    padding-left: 0;
-    padding-right: 15px;
-    overflow: hidden;
-    padding-top: 10px;
-    .make-col(12);
-    &:after {
-        clear: both;
-        content: "";
-        display: table
-    }
-    &:before {
-        content: "";
-        display: table
-    }
-}
-
-
-/* flex 栅格 */
-
-.flex {
-    display: -webkit-box;
-    width: 100%;
-    .col-1 {
-        float: none;
-        width: auto;
-        position: relative;
-        -webkit-box-flex: 1
-    }
-    .col-2 {
-        position: relative;
-        -webkit-box-flex: 2
-    }
-    .col-3 {
-        position: relative;
-        -webkit-box-flex: 3
-    }
-    .col-4 {
-        position: relative;
-        -webkit-box-flex: 4
     }
 }
 

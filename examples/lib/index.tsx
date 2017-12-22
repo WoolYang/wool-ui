@@ -12,7 +12,7 @@ class Example extends React.Component {
     render() {
         return (
             <div>
-                <CheckboxDemo />
+                <GridDemo />
             </div>
         )
     }
