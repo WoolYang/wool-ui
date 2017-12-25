@@ -20,6 +20,7 @@ export interface CheckboxGroupProps {
     max?: number,
     onChange?: any;
     children?: React.ReactNode;
+    className?: string;
 }
 
 export class CheckboxGroup extends React.Component<CheckboxGroupProps, any> {
@@ -32,7 +33,8 @@ export class CheckboxGroup extends React.Component<CheckboxGroupProps, any> {
         showAllName: PropTypes.string, //全选名称
         min: PropTypes.number, //最小值
         max: PropTypes.number, //最大值
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        className: PropTypes.string
     };
 
     static defaultProps = {
@@ -122,17 +124,24 @@ export class CheckboxGroup extends React.Component<CheckboxGroupProps, any> {
             value,
             showAll,
             showAllName,
+            className,
             options
         } = this.props;
 
+        const classes = classNames(
+            prefixCls,
+            className
+        );
+
         return (
-            <div className={`${prefixCls}`} >
+            <div className={classes} >
                 {
                     showAll && (<Checkbox
                         value="all"
-                        checked={value.length === options.length}
+                        checked={options.length !== 0 && value.length === options.length}
                         indeterminate={value.length > 0 && (value.length < options.length)}
                         onChange={this.handleChangeAll}
+                        className={`${prefixCls}-all`}
                     >
                         {showAllName}
                     </Checkbox>)

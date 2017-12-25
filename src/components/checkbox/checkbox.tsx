@@ -11,6 +11,7 @@ export interface CheckboxProps {
     indeterminate?: boolean;
     onChange?: any;
     children?: React.ReactNode;
+    className?: string;  //class
 }
 
 export class Checkbox extends React.Component<CheckboxProps, any> {
@@ -21,6 +22,7 @@ export class Checkbox extends React.Component<CheckboxProps, any> {
         disabled: PropTypes.bool,
         indeterminate: PropTypes.bool,
         onChange: PropTypes.func,
+        className: PropTypes.string,
     };
 
     static defaultProps = {
@@ -62,7 +64,8 @@ export class Checkbox extends React.Component<CheckboxProps, any> {
             prefixCls,
             disabled,
             indeterminate,
-            children
+            children,
+            className
         } = this.props;
 
         const { checked } = this.state;
@@ -73,9 +76,8 @@ export class Checkbox extends React.Component<CheckboxProps, any> {
             disabled && `${prefixCls}-disabled`,
             indeterminate && `${prefixCls}-indeterminate`,
         )
-
         return (
-            <label className={`${prefixCls}`} >
+            <label className={classNames(`${prefixCls}`, className)} >
                 <span className={classes}>
                     <input
                         type="checkbox"
