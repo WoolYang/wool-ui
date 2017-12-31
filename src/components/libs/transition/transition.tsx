@@ -1,9 +1,17 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as PropTypes from 'prop-types';
 
-export interface TransitionProps { compiler: string; framework: string; }
+export interface TransitionProps {
+    name: string;
+    onEnter: string;
+    onAfterEnter: React.FormEventHandler<any>;
+    onLeave: string;
+    onAfterLeave: React.FormEventHandler<any>
+}
 
 export class Transition extends React.Component<TransitionProps, any> {
     render() {
-        return <h1>Hello from {this.props.compiler} and {this.props.framework}!</h1>;
+        return this.state.children;
     }
 }

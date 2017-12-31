@@ -6,7 +6,7 @@ export interface ViewProps {
     children?: any;
 }
 
-export default class View extends React.Component<ViewProps, any> {
+export class View extends React.Component<ViewProps, any> {
     render() {
         const style = this.props.hasOwnProperty('show') && !this.props.show && {
             display: 'none'
