@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 
 export interface ViewProps {
     show?: boolean;
-    children?: any;
+    children?: React.ReactElement<any>;
 }
 
 export class View extends React.Component<ViewProps, any> {

@@ -22,6 +22,7 @@ export interface ButtonProps {
     style?: React.CSSProperties;  //style
     className?: string;  //class
     prefixCls?: string;  //前缀
+    children?: React.ReactNode;
 }
 
 export class Button extends React.Component<ButtonProps, any> {
