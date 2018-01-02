@@ -4,10 +4,10 @@ import * as PropTypes from 'prop-types';
 
 export interface TransitionProps {
     name?: string;
-    onEnter?: Function;
-    onAfterEnter?: Function;
-    onLeave?: Function;
-    onAfterLeave?: Function;
+    onEnter?: Function; //进入前触发
+    onAfterEnter?: Function; //进去后触发
+    onLeave?: Function; //离开前触发
+    onAfterLeave?: Function; //离开后触发
     children?: React.ReactElement<any>;
 }
 

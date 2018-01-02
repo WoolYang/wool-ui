@@ -14,7 +14,7 @@ class Example extends React.Component {
     render() {
         return (
             <div>
-                <TransferDemo />
+                <SelectDemo />
             </div>
         )
     }
