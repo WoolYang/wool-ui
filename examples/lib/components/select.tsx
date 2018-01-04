@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Select } from '../../../src/components/index';
+import { Select, Option } from '../../../src/components/index';
 
 export class SelectDemo extends React.Component {
     render() {
         return (
-            <div>
-                <Select />
+            <div style={{ width: '200px', margin: '0 auto' }}>
+                <Select>
+                    <Option>test</Option>
+                </Select>
             </div>
         )
     }

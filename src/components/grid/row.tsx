@@ -34,7 +34,6 @@ export class Row extends React.Component<RowProps, any> {
             ...style,
         } : style;
 
-        console.log(rowStyle)
         const cols = React.Children.map(children, (col: React.ReactElement<HTMLDivElement>) => {
             if (!col) {
                 return null;

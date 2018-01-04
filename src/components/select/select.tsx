@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as PropTypes from 'prop-types';
 import { Input } from '../input/index';
 import { Transition, View } from '../libs';
+import { contains } from '../libs/utils/utils';
 import './style/select.less';
 
 export interface SelectProps {
@@ -10,6 +11,8 @@ export interface SelectProps {
 }
 
 export class Select extends React.Component<SelectProps, any> {
+
+    [x: string]: any;  //标签索引，否则el会未定义
 
     static defaultProps = {
         prefixCls: 'wool-select'
@@ -21,24 +24,45 @@ export class Select extends React.Component<SelectProps, any> {
             visible: false
         }
     }
-    toggleMenu() {
-        const { visible } = this.state;
+
+    componentDidMount() {
+        document.addEventListener('click', this.handleClose);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClose);
+    }
+
+    handleClose = (e: any) => {
+        if (!contains(this.select, e.target)) {
+            this.setState({
+                visible: false
+            });
+        }
+
+    }
+
+    handleOpen = (e: any) => {
         this.setState({
-            visible: !visible
+            visible: true
         });
     }
 
     render() {
-
+        const { prefixCls, children } = this.props;
         const { visible } = this.state;
         return (
-            <div>
+            <div ref={c => this.select = c}>
                 <Input
-                    onChange={value => this.toggleMenu()}
+                    onFocus={this.handleOpen}
                 ></Input>
                 <Transition name="el-zoom-in-top">
                     <View show={visible !== false}>
-                        <div>111</div>
+                        <div>
+                            <ul>
+                                {children}
+                            </ul>
+                        </div>
                     </View>
                 </Transition>
             </div >
