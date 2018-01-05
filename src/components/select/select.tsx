@@ -66,7 +66,7 @@ export class Select extends React.Component<SelectProps, any> {
                 ></Input>
                 <Transition name="el-zoom-in-top">
                     <View show={!!visible}>
-                        <div>
+                        <div className={`${prefixCls}-dropdown`} >
                             <ul>
                                 {children}
                             </ul>

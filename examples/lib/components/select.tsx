@@ -7,7 +7,11 @@ export class SelectDemo extends React.Component {
         return (
             <div style={{ width: '200px', margin: '0 auto' }}>
                 <Select>
-                    <Option>test</Option>
+                    <Option>test1</Option>
+                    <Option>test2</Option>
+                    <Option>test3</Option>
+                    <Option>test4</Option>
+                    <Option>test5</Option>
                 </Select>
             </div>
         )

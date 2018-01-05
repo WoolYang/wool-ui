@@ -11,7 +11,7 @@ export interface OptionProps {
 export class Option extends React.Component<OptionProps, any> {
 
     static defaultProps = {
-        prefixCls: 'wool-select-option'
+        prefixCls: 'wool-select'
     };
 
     static propTypes = {
@@ -22,7 +22,7 @@ export class Option extends React.Component<OptionProps, any> {
         const { prefixCls, children } = this.props;
 
         const classes = classNames(
-            prefixCls
+            `${prefixCls}-dropdown-item`
         );
 
         return (
