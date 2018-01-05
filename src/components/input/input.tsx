@@ -188,7 +188,7 @@ export class Input extends React.Component<InputProps, any> {
             form,
             className,
             prefixCls,
-            size
+            size,
         } = this.props;
 
         const classes = classNames(

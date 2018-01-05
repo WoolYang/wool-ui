@@ -8,6 +8,7 @@ import './style/select.less';
 
 export interface SelectProps {
     prefixCls?: string;
+    filterable?: boolean;
 }
 
 export class Select extends React.Component<SelectProps, any> {
@@ -15,8 +16,13 @@ export class Select extends React.Component<SelectProps, any> {
     [x: string]: any;  //标签索引，否则el会未定义
 
     static defaultProps = {
-        prefixCls: 'wool-select'
+        prefixCls: 'wool-select',
+        filterable: false
     };
+
+    static propTypes = {
+        filterable: PropTypes.bool
+    }
 
     constructor(props: SelectProps) {
         super(props);
@@ -49,15 +55,17 @@ export class Select extends React.Component<SelectProps, any> {
     }
 
     render() {
-        const { prefixCls, children } = this.props;
+        const { prefixCls, children, filterable } = this.props;
         const { visible } = this.state;
         return (
-            <div ref={c => this.select = c}>
+            <div ref={c => this.select = c} className={prefixCls} >
                 <Input
                     onFocus={this.handleOpen}
+                    readOnly={!filterable}
+                    suffix={<i className={visible ? 'up-arrow' : 'down-arrow'}></i>}
                 ></Input>
                 <Transition name="el-zoom-in-top">
-                    <View show={visible !== false}>
+                    <View show={!!visible}>
                         <div>
                             <ul>
                                 {children}
