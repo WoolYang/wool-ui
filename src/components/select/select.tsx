@@ -9,6 +9,8 @@ import './style/select.less';
 export interface SelectProps {
     prefixCls?: string;
     filterable?: boolean;
+    value?: string | number | boolean;
+    onChange?: any;
 }
 
 export class Select extends React.Component<SelectProps, any> {
@@ -21,13 +23,16 @@ export class Select extends React.Component<SelectProps, any> {
     };
 
     static propTypes = {
-        filterable: PropTypes.bool
+        filterable: PropTypes.bool,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+        onChange: PropTypes.func
     }
 
     constructor(props: SelectProps) {
         super(props);
         this.state = {
-            visible: false
+            visible: false,
+            selectedLabel: ''
         }
     }
 
@@ -54,12 +59,36 @@ export class Select extends React.Component<SelectProps, any> {
         });
     }
 
+    handleChange = ({ value, label }: any) => {
+        const { onChange } = this.props;
+        if (onChange) {
+            onChange({ value, label });
+        }
+        this.setState({
+            visible: false,
+            selectedLabel: label
+        });
+    }
+
     render() {
         const { prefixCls, children, filterable } = this.props;
-        const { visible } = this.state;
+        const { visible, selectedLabel } = this.state;
+
+        const options = React.Children.map(children, (element: any) => {
+            if (!element) {
+                return null;
+            }
+            return React.cloneElement(
+                element,
+                Object.assign({
+                    onChange: this.handleChange
+                }, element.props));
+        });
+
         return (
             <div ref={c => this.select = c} className={prefixCls} >
                 <Input
+                    value={selectedLabel}
                     onFocus={this.handleOpen}
                     readOnly={!filterable}
                     suffix={<i className={visible ? 'up-arrow' : 'down-arrow'}></i>}
@@ -68,7 +97,7 @@ export class Select extends React.Component<SelectProps, any> {
                     <View show={!!visible}>
                         <div className={`${prefixCls}-dropdown`} >
                             <ul>
-                                {children}
+                                {options}
                             </ul>
                         </div>
                     </View>
