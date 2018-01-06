@@ -38,6 +38,12 @@ export class Select extends React.Component<SelectProps, any> {
 
     componentDidMount() {
         document.addEventListener('click', this.handleClose);
+
+        React.Children.map(this.props.children, (element: any) => {
+            if (this.props.value === element.props.value) {
+                this.setState({ selectedLabel: element.props.children })
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -71,13 +77,14 @@ export class Select extends React.Component<SelectProps, any> {
     }
 
     render() {
-        const { prefixCls, children, filterable } = this.props;
+        const { prefixCls, children, filterable, value } = this.props;
         const { visible, selectedLabel } = this.state;
 
         const options = React.Children.map(children, (element: any) => {
             if (!element) {
                 return null;
             }
+
             return React.cloneElement(
                 element,
                 Object.assign({
