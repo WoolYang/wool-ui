@@ -42,10 +42,14 @@
             transform: rotate(180deg) scale(1);
         }
     }
+    .wool-input {
+        cursor: pointer;
+    }
     &-dropdown {
         position: absolute;
         z-index: 1001;
         border: 1px solid #d1dbe5;
+        background-color: #fff;
         border-radius: 2px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
         margin: 5px 0;
@@ -68,5 +72,17 @@
         &:hover {
             background-color: #e4e8f1;
         }
+    }
+    &-enter-active,
+    &-leave-active {
+        opacity: 1;
+        transform: scaleY(1);
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1) 0.1s, opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
+        transform-origin: center top;
+    }
+    &-enter,
+    &-leave-active {
+        opacity: 0;
+        transform: scaleY(0);
     }
 }

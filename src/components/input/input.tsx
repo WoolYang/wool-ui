@@ -41,6 +41,7 @@ export interface InputProps extends AbstractInputProps {
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onFocus?: React.FormEventHandler<any>;
     onBlur?: React.FormEventHandler<any>;
+    onClick?: React.FormEventHandler<any>;
 }
 
 export class Input extends React.Component<InputProps, any> {
@@ -81,7 +82,8 @@ export class Input extends React.Component<InputProps, any> {
         onKeyDown: PropTypes.func,
         onChange: PropTypes.func,
         onFocus: PropTypes.func,
-        onBlur: PropTypes.func
+        onBlur: PropTypes.func,
+        onClick: PropTypes.func
     };
 
     handleKeyDown = (e: any) => {
@@ -112,6 +114,13 @@ export class Input extends React.Component<InputProps, any> {
         const { onBlur } = this.props;
         if (onBlur) {
             onBlur(e);
+        }
+    }
+
+    handleClick = (e: any) => {
+        const { onClick } = this.props;
+        if (onClick) {
+            onClick(e);
         }
     }
 
@@ -217,6 +226,7 @@ export class Input extends React.Component<InputProps, any> {
                 onChange={this.handleChange}
                 onFocus={this.handleFocus}
                 onBlur={this.handleBlur}
+                onClick={this.handleClick}
             />
         )
     }

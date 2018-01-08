@@ -35,17 +35,21 @@ export class Transition extends React.Component<TransitionProps, any> {
             return;
         }
 
-        if (this.isViewComponent(nextChildren)) {
-            this.setState({
-                children: this.enhanceChildren(nextChildren, { show: children ? children.props.show : true })
-            })
-        } else {
-            if (nextChildren) {
-                this.setState({
-                    children: this.enhanceChildren(nextChildren)
-                })
-            }
-        }
+        this.setState({
+            children: this.enhanceChildren(nextChildren)
+        })
+
+        /*         if (this.isViewComponent(nextChildren)) {  此处保持view原show属性用意何在？
+                    this.setState({
+                        children: this.enhanceChildren(nextChildren, { show: children ? children.props.show : true })
+                    })
+                } else {
+                    if (nextChildren) {
+                        this.setState({
+                            children: this.enhanceChildren(nextChildren)
+                        })
+                    }
+                } */
     }
 
     componentDidUpdate(preProps: TransitionProps) {
@@ -53,7 +57,6 @@ export class Transition extends React.Component<TransitionProps, any> {
 
         const children: React.ReactElement<any> = React.isValidElement(this.props.children) && React.Children.only(this.props.children);
         const preChildren: React.ReactElement<any> = React.isValidElement(preProps.children) && React.Children.only(preProps.children);
-
         if (this.isViewComponent(children)) {
             if ((!preChildren || !preChildren.props.show) && children.props.show) {
                 this.toggleVisible();
@@ -91,7 +94,6 @@ export class Transition extends React.Component<TransitionProps, any> {
     //进入触发
     didEnter(e: any) {
         const childDOM: any = ReactDOM.findDOMNode(this.el); //获取children DOM
-
         if (!e || e.target !== childDOM) return;
 
         const { onAfterEnter } = this.props;
@@ -134,14 +136,13 @@ export class Transition extends React.Component<TransitionProps, any> {
 
     //是否为嵌套view组件
     isViewComponent(element: any) {
-        return element && element.type._typeName === 'View';
+        return element && element.type.name === 'View';
     }
 
     toggleVisible() {
         const { onEnter } = this.props;
         const { enter, enterActive, enterTo, leaveActive, leaveTo } = this.transitionClass;
         const childDOM: any = ReactDOM.findDOMNode(this.el);
-
         childDOM.addEventListener('transitionend', this.didEnter);
         childDOM.addEventListener('animationend', this.didEnter);
 

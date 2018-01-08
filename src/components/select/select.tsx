@@ -37,7 +37,7 @@ export class Select extends React.Component<SelectProps, any> {
     }
 
     componentDidMount() {
-        document.addEventListener('click', this.handleClose);
+        document.addEventListener('click', this.handleOutClose);
 
         React.Children.map(this.props.children, (element: any) => {
             if (this.props.value === element.props.value) {
@@ -47,10 +47,10 @@ export class Select extends React.Component<SelectProps, any> {
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', this.handleClose);
+        document.removeEventListener('click', this.handleOutClose);
     }
 
-    handleClose = (e: any) => {
+    handleOutClose = (e: any) => {
         if (!contains(this.select, e.target)) {
             this.setState({
                 visible: false
@@ -59,9 +59,9 @@ export class Select extends React.Component<SelectProps, any> {
 
     }
 
-    handleOpen = (e: any) => {
+    handleToggle = (e: any) => {
         this.setState({
-            visible: true
+            visible: !this.state.visible
         });
     }
 
@@ -77,6 +77,8 @@ export class Select extends React.Component<SelectProps, any> {
     }
 
     render() {
+
+        console.log(this)
         const { prefixCls, children, filterable, value } = this.props;
         const { visible, selectedLabel } = this.state;
 
@@ -96,12 +98,12 @@ export class Select extends React.Component<SelectProps, any> {
             <div ref={c => this.select = c} className={prefixCls} >
                 <Input
                     value={selectedLabel}
-                    onFocus={this.handleOpen}
                     readOnly={!filterable}
                     suffix={<i className={visible ? 'up-arrow' : 'down-arrow'}></i>}
+                    onClick={this.handleToggle}
                 ></Input>
-                <Transition name="el-zoom-in-top">
-                    <View show={!!visible}>
+                <Transition name={prefixCls} >
+                    <View show={visible}>
                         <div className={`${prefixCls}-dropdown`} >
                             <ul>
                                 {options}
