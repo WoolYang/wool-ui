@@ -60,8 +60,9 @@ export class Select extends React.Component<SelectProps, any> {
     }
 
     handleToggle = (e: any) => {
-        this.setState({
-            visible: !this.state.visible
+        this.setState((prev: any) => {
+            prev.visible = !this.state.visible;
+            return prev;
         });
     }
 
