@@ -42,9 +42,14 @@ export interface InputProps extends AbstractInputProps {
     onFocus?: React.FormEventHandler<any>;
     onBlur?: React.FormEventHandler<any>;
     onClick?: React.FormEventHandler<any>;
+    onMouseEnter?: React.FormEventHandler<any>;
+    onMouseLeave?: React.FormEventHandler<any>;
 }
 
 export class Input extends React.Component<InputProps, any> {
+
+    [x: string]: any;  //标签索引，否则el会未定义
+
     static defaultProps = {
         type: 'text',
         disabled: false,
@@ -83,45 +88,52 @@ export class Input extends React.Component<InputProps, any> {
         onChange: PropTypes.func,
         onFocus: PropTypes.func,
         onBlur: PropTypes.func,
-        onClick: PropTypes.func
+        onClick: PropTypes.func,
+        onMouseEnter: PropTypes.func,
+        onMouseLeave: PropTypes.func
     };
+
+    saveInput = (node: HTMLInputElement) => {
+        this.input = node;
+    }
 
     handleKeyDown = (e: any) => {
         const { onPressEnter, onKeyDown } = this.props;
         if (e.keyCode === 13 && onPressEnter) {
             onPressEnter(e);
         }
-        if (onKeyDown) {
-            onKeyDown(e);
-        }
+
+        onKeyDown && onKeyDown(e);
     }
 
     handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { onChange } = this.props;
-        if (onChange) {
-            onChange(e);
-        }
+        onChange && onChange(e);
     }
 
     handleFocus = (e: any) => {
         const { onFocus } = this.props;
-        if (onFocus) {
-            onFocus(e);
-        }
+        onFocus && onFocus(e);
     }
 
     handleBlur = (e: any) => {
         const { onBlur } = this.props;
-        if (onBlur) {
-            onBlur(e);
-        }
+        onBlur && onBlur(e);
     }
 
     handleClick = (e: any) => {
         const { onClick } = this.props;
-        if (onClick) {
-            onClick(e);
-        }
+        onClick && onClick(e);
+    }
+
+    handleMouseEnter = (e: any) => {
+        const { onMouseEnter } = this.props;
+        onMouseEnter && onMouseEnter(e);
+    }
+
+    handleMouseLeave = (e: any) => {
+        const { onMouseLeave } = this.props;
+        onMouseLeave && onMouseLeave(e);
     }
 
     renderLabeledInput(children: React.ReactElement<any>) {
@@ -209,7 +221,7 @@ export class Input extends React.Component<InputProps, any> {
 
         return this.renderLabeledIcon(
             <input
-                ref="input"
+                ref={this.saveInput}
                 className={classes}
                 type={type}
                 value={value}
@@ -227,6 +239,8 @@ export class Input extends React.Component<InputProps, any> {
                 onFocus={this.handleFocus}
                 onBlur={this.handleBlur}
                 onClick={this.handleClick}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
             />
         )
     }

@@ -10,8 +10,8 @@ export class SelectDemo extends React.Component<SelectDemoProps, any> {
     constructor(props: Object) {
         super(props);
         this.state = {
-            value1: '1',
-            value2: 'x',
+            value1: '',
+            value2: '',
             options: [
                 { label: '选项1', value: '1' },
                 { label: '选项2', value: '2' },
@@ -41,7 +41,7 @@ export class SelectDemo extends React.Component<SelectDemoProps, any> {
                         })
                     }
                 </Select>
-                <Select value={this.state.value2} onChange={this.handleChange}>
+                <Select value={this.state.value2} onChange={this.handleChange} clearable={true}>
                     {
                         this.state.options1.map((item: any, index: number) => {
                             return <Option key={index} value={item.value}>{item.label}</Option>

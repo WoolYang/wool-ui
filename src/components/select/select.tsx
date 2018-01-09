@@ -11,6 +11,10 @@ export interface SelectProps {
     filterable?: boolean;
     value?: string | number | boolean;
     onChange?: any;
+    disabled?: boolean;
+    placeholder?: string;
+    name?: string;
+    clearable?: boolean;
 }
 
 export class Select extends React.Component<SelectProps, any> {
@@ -19,20 +23,28 @@ export class Select extends React.Component<SelectProps, any> {
 
     static defaultProps = {
         prefixCls: 'wool-select',
-        filterable: false
+        filterable: false,
+        disabled: false,
+        clearable: false,
+        placeholder: '请选择'
     };
 
     static propTypes = {
         filterable: PropTypes.bool,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        disabled: PropTypes.bool,
+        placeholder: PropTypes.string,
+        name: PropTypes.string,
+        clearable: PropTypes.bool
     }
 
     constructor(props: SelectProps) {
         super(props);
         this.state = {
             visible: false,
-            selectedLabel: ''
+            selectedLabel: '',
+            inputHover: false
         }
     }
 
@@ -77,10 +89,38 @@ export class Select extends React.Component<SelectProps, any> {
         });
     }
 
+    handleMouseEnter = () => {
+        this.setState({ inputHover: true })
+    }
+
+    handleMouseLeave = () => {
+        this.setState({ inputHover: false })
+    }
+
+    clearSelected = () => {
+        const { onChange } = this.props;
+        if (onChange) {
+            onChange({ value: '', label: '' });
+        }
+        this.setState({
+            visible: false,
+            selectedLabel: ''
+        });
+    }
+
+    iconElement() {
+        const { clearable } = this.props;
+        const { visible, inputHover, selectedLabel } = this.state;
+
+        return clearable && !visible && inputHover && Boolean(selectedLabel) ?
+            <i className={'close-icon'} onClick={this.clearSelected} /> :
+            <i className={visible ? 'up-arrow' : 'down-arrow'} />
+
+    }
+
     render() {
 
-        console.log(this)
-        const { prefixCls, children, filterable, value } = this.props;
+        const { prefixCls, children, filterable, value, disabled, placeholder, name } = this.props;
         const { visible, selectedLabel } = this.state;
 
         const options = React.Children.map(children, (element: any) => {
@@ -98,10 +138,15 @@ export class Select extends React.Component<SelectProps, any> {
         return (
             <div ref={c => this.select = c} className={prefixCls} >
                 <Input
+                    name={name}
                     value={selectedLabel}
                     readOnly={!filterable}
-                    suffix={<i className={visible ? 'up-arrow' : 'down-arrow'}></i>}
+                    suffix={this.iconElement()}
                     onClick={this.handleToggle}
+                    disabled={disabled}
+                    placeholder={placeholder}
+                    onMouseEnter={this.handleMouseEnter}
+                    onMouseLeave={this.handleMouseLeave}
                 ></Input>
                 <Transition name={prefixCls} >
                     <View show={visible}>
