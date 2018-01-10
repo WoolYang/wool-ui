@@ -62,6 +62,7 @@ export class Select extends React.Component<SelectProps, any> {
         document.removeEventListener('click', this.handleOutClose);
     }
 
+    //点击外元素关闭事件
     handleOutClose = (e: any) => {
         if (!contains(this.select, e.target)) {
             this.setState({
@@ -71,13 +72,15 @@ export class Select extends React.Component<SelectProps, any> {
 
     }
 
-    handleToggle = (e: any) => {
+    //切换下拉框显示
+    handleToggle = (e?: any) => {
         this.setState((prev: any) => {
             prev.visible = !this.state.visible;
             return prev;
         });
     }
 
+    //选择值处理
     handleChange = ({ value, label }: any) => {
         const { onChange } = this.props;
         if (onChange) {
@@ -89,14 +92,17 @@ export class Select extends React.Component<SelectProps, any> {
         });
     }
 
+    //鼠标进入事件
     handleMouseEnter = () => {
         this.setState({ inputHover: true })
     }
 
+    //鼠标移出事件
     handleMouseLeave = () => {
         this.setState({ inputHover: false })
     }
 
+    //清除选中项事件
     clearSelected = () => {
         const { onChange } = this.props;
         if (onChange) {
@@ -108,13 +114,21 @@ export class Select extends React.Component<SelectProps, any> {
         });
     }
 
-    iconElement() {
+    //icon点击事件
+    handleIconClick = () => {
+        if (this.iconClass().indexOf('close-icon') > -1) {
+            this.clearSelected();
+        }
+    }
+
+    //icon样式计算
+    iconClass() {
         const { clearable } = this.props;
         const { visible, inputHover, selectedLabel } = this.state;
 
         return clearable && !visible && inputHover && Boolean(selectedLabel) ?
-            <i className={'close-icon'} onClick={this.clearSelected} /> :
-            <i className={visible ? 'up-arrow' : 'down-arrow'} />
+            'close-icon' :
+            visible ? 'up-arrow' : 'down-arrow'
 
     }
 
@@ -136,12 +150,14 @@ export class Select extends React.Component<SelectProps, any> {
         });
 
         return (
-            <div ref={c => this.select = c} className={prefixCls} >
+            <div ref={c => this.select = c}
+                className={prefixCls}
+            >
                 <Input
                     name={name}
                     value={selectedLabel}
                     readOnly={!filterable}
-                    suffix={this.iconElement()}
+                    suffix={<i className={this.iconClass()} onClick={this.handleIconClick} onMouseEnter={this.handleMouseEnter} />}
                     onClick={this.handleToggle}
                     disabled={disabled}
                     placeholder={placeholder}

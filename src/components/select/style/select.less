@@ -7,12 +7,21 @@
     display: block;
     width: 18px;
     height: 18px;
+    cursor: pointer;
 }
 
 .wool-select-after {
     position: absolute;
     content: ' ';
     transition: transform 0.3s ease-in-out;
+}
+
+.wool-select-close-icon {
+    position: absolute;
+    content: '/';
+    top: 1.5px;
+    left: 7px;
+    color: #fff;
 }
 
 .triangle {
@@ -27,6 +36,10 @@
 
 .@{select} {
     width: inherit;
+    .wool-input-suffix, //解决重叠元素不能感应鼠标事件的问题，实现点击穿透
+    .wool-input-prefix {
+        pointer-events: none;
+    }
     .up-arrow {
         &:extend(.wool-select-common-icon);
         &:after {
@@ -44,7 +57,17 @@
     }
     .close-icon {
         &:extend(.wool-select-common-icon);
-        background-color: #ccc
+        border-radius: 18px;
+        background: #ccc;
+        pointer-events: all;
+        &:after {
+            &:extend(.wool-select-close-icon);
+            transform: rotate(24deg) scale(1);
+        }
+        &:before {
+            &:extend(.wool-select-close-icon);
+            transform: rotate(122deg) scale(1);
+        }
     }
     .wool-input {
         cursor: pointer;
