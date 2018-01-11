@@ -44,6 +44,7 @@ export class Select extends React.Component<SelectProps, any> {
         this.state = {
             visible: false,
             selectedLabel: '',
+            selectedValue: '',
             inputHover: false
         }
     }
@@ -53,7 +54,10 @@ export class Select extends React.Component<SelectProps, any> {
 
         React.Children.map(this.props.children, (element: any) => {
             if (this.props.value === element.props.value) {
-                this.setState({ selectedLabel: element.props.children })
+                this.setState({
+                    selectedLabel: element.props.children,
+                    selectedValue: element.props.value,
+                })
             }
         });
     }
@@ -88,7 +92,8 @@ export class Select extends React.Component<SelectProps, any> {
         }
         this.setState({
             visible: false,
-            selectedLabel: label
+            selectedLabel: label,
+            selectedValue: value
         });
     }
 
@@ -110,7 +115,8 @@ export class Select extends React.Component<SelectProps, any> {
         }
         this.setState({
             visible: false,
-            selectedLabel: ''
+            selectedLabel: '',
+            selectedValue: ''
         });
     }
 
@@ -135,7 +141,7 @@ export class Select extends React.Component<SelectProps, any> {
     render() {
 
         const { prefixCls, children, filterable, value, disabled, placeholder, name } = this.props;
-        const { visible, selectedLabel } = this.state;
+        const { visible, selectedLabel, selectedValue } = this.state;
 
         const options = React.Children.map(children, (element: any) => {
             if (!element) {
@@ -145,7 +151,8 @@ export class Select extends React.Component<SelectProps, any> {
             return React.cloneElement(
                 element,
                 Object.assign({
-                    onChange: this.handleChange
+                    onChange: this.handleChange,
+                    selectedValue: selectedValue
                 }, element.props));
         });
 

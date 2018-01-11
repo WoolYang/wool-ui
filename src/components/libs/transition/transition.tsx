@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as classNames from 'classnames';
 import * as PropTypes from 'prop-types';
 
 export interface TransitionProps {
@@ -24,6 +25,10 @@ export class Transition extends React.Component<TransitionProps, any> {
 
         this.didEnter = this.didEnter.bind(this); //进入
         this.didLeave = this.didLeave.bind(this); //离开
+    }
+
+    componentDidMount() {
+        this.toggleHidden()
     }
 
     componentWillReceiveProps(nextProps: TransitionProps) {
@@ -95,7 +100,6 @@ export class Transition extends React.Component<TransitionProps, any> {
     didEnter(e: any) {
         const childDOM: any = ReactDOM.findDOMNode(this.el); //获取children DOM
         if (!e || e.target !== childDOM) return;
-
         const { onAfterEnter } = this.props;
         const { enterActive, enterTo } = this.transitionClass;
 

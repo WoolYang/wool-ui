@@ -21,7 +21,7 @@
     content: '/';
     top: 1.5px;
     left: 7px;
-    color: #fff;
+    color: @white;
 }
 
 .triangle {
@@ -58,7 +58,7 @@
     .close-icon {
         &:extend(.wool-select-common-icon);
         border-radius: 18px;
-        background: #ccc;
+        background: @grey4;
         pointer-events: all;
         &:after {
             &:extend(.wool-select-close-icon);
@@ -75,8 +75,8 @@
     &-dropdown {
         position: absolute;
         z-index: 1001;
-        border: 1px solid #d1dbe5;
-        background-color: #fff;
+        border: 1px solid @grey2;
+        background-color: @white;
         border-radius: 2px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
         margin: 5px 0;
@@ -92,13 +92,25 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: #48576a;
+        color: @blueGrey4;
         height: 36px;
         line-height: 1.5;
         cursor: pointer;
         &:hover {
-            background-color: #e4e8f1;
+            background-color: @grey2;
         }
+    }
+    &-disabled {
+        opacity: 0.5;
+        background-color: @white;
+        &:hover {
+            cursor: not-allowed;
+            background-color: @white;
+        }
+    }
+    &-selected {
+        background-color: @lightBlue4;
+        color: @white;
     }
     &-enter-active,
     &-leave-active {
