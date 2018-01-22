@@ -7,6 +7,7 @@ import { Checkbox, CheckboxGroup } from './checkbox/index';
 import { Row, Col } from './grid/index';
 import { Select, Option } from './select/index';
 import { Transfer } from './transfer/index';
+import { DatePicker } from './datePicker/index';
 
 import "../style/public.less";
 
@@ -24,5 +25,6 @@ export {
     Col,
     Select,
     Option,
-    Transfer
+    Transfer,
+    DatePicker
 };
