@@ -5,7 +5,7 @@ import { DatePicker } from '../../../src/components/index';
 export class DatePickerDemo extends React.Component {
     render() {
         return (
-            <div>
+            <div style={{ width: '200px', margin: '0 auto' }}>
                 <DatePicker />
             </div>
         )

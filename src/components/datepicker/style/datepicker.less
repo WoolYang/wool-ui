@@ -1,0 +1,81 @@
+@import "../../../style/variables";
+@datepicker: wool-datepicker;
+.wool-datepicker-common-icon {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.wool-datepicker-close-icon {
+    position: absolute;
+    content: '/';
+    top: 1.5px;
+    left: 7px;
+    color: @white;
+}
+
+.@{datepicker} {
+    width: inherit;
+    .wool-input-suffix, //解决重叠元素不能感应鼠标事件的问题，实现点击穿透
+    .wool-input-prefix {
+        pointer-events: none;
+    }
+    .close-icon {
+        &:extend(.wool-datepicker-common-icon);
+        border-radius: 18px;
+        background: @grey4;
+        pointer-events: all;
+        &:after {
+            &:extend(.wool-datepicker-close-icon);
+            transform: rotate(24deg) scale(1);
+        }
+        &:before {
+            &:extend(.wool-datepicker-close-icon);
+            transform: rotate(122deg) scale(1);
+        }
+    }
+    .wool-input {
+        cursor: pointer;
+    }
+    &-dropdown {
+        position: absolute;
+        z-index: 1001;
+        border: 1px solid @grey2;
+        background-color: @white;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        margin: 5px 0;
+        padding: 5px 0;
+        width: inherit;
+        max-height: 220px;
+        overflow-y: auto;
+    }
+    &-disabled {
+        opacity: 0.5;
+        background-color: @white;
+        &:hover {
+            cursor: not-allowed;
+            background-color: @white;
+        }
+    }
+    &-selected {
+        background-color: @lightBlue4;
+        color: @white;
+    }
+    &-enter-active,
+    &-leave-active {
+        opacity: 1;
+        transform: scaleY(1);
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1) 0.1s, opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
+        transform-origin: center top;
+    }
+    &-enter,
+    &-leave-active {
+        opacity: 0;
+        transform: scaleY(0);
+    }
+}
