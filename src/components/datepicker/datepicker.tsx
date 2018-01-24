@@ -4,6 +4,7 @@ import * as classNames from 'classnames';
 import { Input } from '../input/index';
 import { Transition, View } from '../libs';
 import { contains } from '../libs/utils/utils';
+import { BasicPanel } from './panel/index';
 import './style/datePicker.less';
 
 export type SelectionMode = 'year' | 'month' | 'week' | 'day';
@@ -154,9 +155,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 <Transition name={prefixCls} >
                     <View show={visible}>
                         <div className={`${prefixCls}-dropdown`} >
-                            <ul>
-                                111111111
-                            </ul>
+                            <BasicPanel />
                         </div>
                     </View>
                 </Transition>
