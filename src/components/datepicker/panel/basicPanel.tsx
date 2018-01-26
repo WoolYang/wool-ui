@@ -34,7 +34,7 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
         format: 'yyyy-MM-dd',
         isShowTime: false,
         selectionMode: 'day',
-        showWeekNumber: true
+        showWeekNumber: false
     }
 
     static propTypes = {

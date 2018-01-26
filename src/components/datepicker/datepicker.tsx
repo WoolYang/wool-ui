@@ -68,7 +68,8 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         this.state = {
             visible: false,
             inputHover: false,
-            currentView: this.initCurrentView()
+            currentView: this.initCurrentView(), //当前视图
+            date: new Date() //当前日期
         }
     }
 
@@ -150,11 +151,16 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     //视图显示
     pickerContent() {
-        const { currentView } = this.state;
+        const { selectionMode, showWeekNumber } = this.props;
+        const { currentView, date } = this.state;
         let result = null;
         switch (currentView) {
             case PICKER_VIEWS.DATE:
-                result = (<DateView />)
+                result = (<DateView
+                    selectionMode={selectionMode}
+                    showWeekNumber={showWeekNumber}
+                    date={date}
+                />)
                 break
             default:
                 throw new Error('invalid currentView value')
