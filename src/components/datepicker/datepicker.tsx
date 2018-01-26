@@ -5,6 +5,8 @@ import { Input } from '../input/index';
 import { Transition, View } from '../libs';
 import { contains } from '../libs/utils/utils';
 import { BasicPanel } from './panel/index';
+import { DateView } from './view/index';
+import { SELECTION_MODE, PICKER_VIEWS } from "./utils/index";
 import './style/datePicker.less';
 
 export type SelectionMode = 'year' | 'month' | 'week' | 'day';
@@ -65,27 +67,39 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         super(props);
         this.state = {
             visible: false,
-            inputHover: false
+            inputHover: false,
+            currentView: this.initCurrentView()
         }
     }
 
     componentDidMount() {
         document.addEventListener('click', this.handleOutClose);
-    }
 
+    }
 
     componentWillUnmount() {
         document.removeEventListener('click', this.handleOutClose);
     }
 
+    //初始化视图状态
+    initCurrentView() {
+        let currentView;
+        switch (this.props.selectionMode) {
+            case SELECTION_MODE.MONTH:
+                currentView = PICKER_VIEWS.MONTH; break;
+            case SELECTION_MODE.YEAR:
+                currentView = PICKER_VIEWS.YEAR; break;
+            default:
+                currentView = PICKER_VIEWS.DATE;
+        }
+        return currentView
+    }
+
     //点击外元素关闭事件
     handleOutClose = (e: any) => {
         if (!contains(this.select, e.target)) {
-            this.setState({
-                visible: false
-            });
+            this.setState({ visible: false });
         }
-
     }
 
     //icon点击事件
@@ -134,6 +148,20 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     }
 
+    //视图显示
+    pickerContent() {
+        const { currentView } = this.state;
+        let result = null;
+        switch (currentView) {
+            case PICKER_VIEWS.DATE:
+                result = (<DateView />)
+                break
+            default:
+                throw new Error('invalid currentView value')
+        }
+        return result;
+    }
+
     render() {
         const { prefixCls, value, readOnly, disabled, placeholder, name } = this.props;
         const { visible } = this.state;
@@ -156,6 +184,9 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                     <View show={visible}>
                         <div className={`${prefixCls}-dropdown`} >
                             <BasicPanel />
+                            <div className={`${prefixCls}-content`}>
+                                {this.pickerContent()}
+                            </div>
                         </div>
                     </View>
                 </Transition>
