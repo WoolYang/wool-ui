@@ -45,20 +45,37 @@ export const getDayCountOfMonth = function (year: number, month: number) {
 //获取单元格第一个的日期
 export const getStartDateCellOfMonth = function (year: number, month: number, offsetWeek = 0) {
     const result = new Date(year, month, 1);
-    const day = result.getDay();
+    const day = result.getDay(); //当月1号为一周第几天
 
-    if (day === offsetWeek) {
+    if (day === offsetWeek) { //周日向前补一周
         result.setTime(result.getTime() - DAY_DURATION * 7);
     } else {
-        const offset = getOffsetToWeekOrigin(day, offsetWeek);
+        const offset = getOffsetToWeekOrigin(day, offsetWeek); //偏移天数
         result.setTime(result.getTime() - DAY_DURATION * offset);
     }
 
     return result;
 };
 
+//计算一周偏移天数
 export function getOffsetToWeekOrigin(day: number, offsetWeek = 0) {
     let offset = day >= offsetWeek ? day - offsetWeek : 7 + day - offsetWeek;
     offset = offset === 0 ? 7 : offset
     return offset
 }
+
+//时间置零
+export const clearHours = function (time: Date) {
+    const cloneDate = new Date(time);
+    cloneDate.setHours(0, 0, 0, 0);
+    return cloneDate.getTime();
+};
+
+//计算周号
+export const getWeekNumber = function (src: Date) {
+    const date = new Date(src.getTime());
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+    const week1 = new Date(date.getFullYear(), 0, 4);
+    return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+};

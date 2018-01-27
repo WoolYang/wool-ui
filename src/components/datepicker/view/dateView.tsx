@@ -1,7 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as PropTypes from 'prop-types';
-import { WEEKS, getFirstDayOfMonth, getDayCountOfMonth, getStartDateCellOfMonth } from "../utils/index";
+import {
+    WEEKS,
+    DAY_DURATION,
+    getFirstDayOfMonth,
+    getDayCountOfMonth,
+    getStartDateCellOfMonth,
+    clearHours,
+    getWeekNumber
+} from "../utils/index";
 
 export type SelectionMode = 'year' | 'month' | 'week' | 'day';
 export interface DateViewProps {
@@ -23,7 +31,7 @@ export default class DateView extends React.Component<DateViewProps, any> {
 
         this.state = {
             tableRows: [[], [], [], [], [], []],
-            firstDayOfWeek: 0 //每周的第一天星期几，0周一，6周日
+            firstDayOfWeek: 0 //每周日期偏移，周日0，周六6
         }
     }
 
@@ -31,15 +39,10 @@ export default class DateView extends React.Component<DateViewProps, any> {
         this.getRows();
     }
 
-    //当日为一周的第几天
-    getOffsetWeek() {
-        return this.state.firstDayOfWeek % 7;
-    }
-
     //表格行列计算
     getRows() {
         const { date, showWeekNumber, selectionMode } = this.props;
-        const { tableRows } = this.state;
+        const { tableRows, firstDayOfWeek } = this.state;
         //获取当前选择日期
         const ndate = new Date(date.getTime());
         //获取当月的第一天
@@ -52,9 +55,23 @@ export default class DateView extends React.Component<DateViewProps, any> {
         const rows = tableRows;
         let count = 1;
         let firstDayPosition;
-        const startDate = getStartDateCellOfMonth(ndate.getFullYear(), ndate.getMonth(), this.getOffsetWeek());
-        console.log(startDate)
+        //获得单元格第一个日期
+        const startDate = getStartDateCellOfMonth(ndate.getFullYear(), ndate.getMonth(), firstDayOfWeek);
+        //当前日期，时间置零
+        const now = clearHours(new Date());
+
+        for (var i = 0; i < 6; i++) {
+            const row = rows[i]; //一行
+            if (showWeekNumber) {//是否显示周号
+                if (!row[0]) {
+                    //获取周号，参数为根据startDate计算每行起始天数
+                    row[0] = { type: 'week', text: getWeekNumber(new Date(startDate.getTime() + DAY_DURATION * (i * 7 + 1))) };
+                }
+            }
+            console.log(row)
+        }
     }
+
 
     //获取行
     getMarkedRangeRows() {
