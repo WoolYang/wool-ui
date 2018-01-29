@@ -59,7 +59,7 @@
         margin: 5px 0;
         padding: 5px 0;
         width: 260px;
-        max-height: 220px;
+        max-height: 292px;
         overflow-y: auto;
         .@{datepicker}-header {
             margin: 12px;
@@ -80,6 +80,10 @@
                     transform: rotate(0deg) scale(1);
                 }
             }
+        }
+        .@{datepicker}-content {
+            position: relative;
+            margin: 15px;
         }
     }
     &-disabled {
@@ -105,5 +109,28 @@
     &-leave-active {
         opacity: 0;
         transform: scaleY(0);
+    } //表格样式
+    &-datetable {
+        font-size: 12px;
+        min-width: 230px;
+        user-select: none;
+        td,
+        th {
+            width: 32px;
+            height: 32px;
+            box-sizing: border-box;
+            text-align: center;
+            cursor: pointer;
+        }
+        &-row {
+            .prev-month,
+            .next-month {
+                color: @grey4;
+            }
+            .current:not(.disabled) {
+                background-color: @lightBlue4!important;
+                color: @white;
+            }
+        }
     }
 }

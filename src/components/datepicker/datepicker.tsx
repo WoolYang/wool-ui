@@ -160,6 +160,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                     selectionMode={selectionMode}
                     showWeekNumber={showWeekNumber}
                     date={date}
+                    onPick={this.handleDatePick}
                 />)
                 break
             default:
@@ -168,9 +169,16 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         return result;
     }
 
+    //年月日选择
+    handleDatePick = ({ date }: { [key: string]: Date }) => {
+        this.setState({
+            date: date
+        })
+    }
+
     render() {
-        const { prefixCls, value, readOnly, disabled, placeholder, name } = this.props;
-        const { visible } = this.state;
+        const { prefixCls, value, readOnly, disabled, placeholder, name, } = this.props;
+        const { visible, date, currentView } = this.state;
         return (
             <div ref={c => this.select = c}
                 className={prefixCls}
@@ -189,9 +197,9 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 <Transition name={prefixCls} >
                     <View show={visible}>
                         <div className={`${prefixCls}-dropdown`} >
-                            <BasicPanel />
+                            <BasicPanel date={date} currentView={currentView} />
                             <div className={`${prefixCls}-content`}>
-                                {this.pickerContent()}
+                                {visible ? this.pickerContent() : null}
                             </div>
                         </div>
                     </View>
