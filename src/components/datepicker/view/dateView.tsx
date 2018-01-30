@@ -33,7 +33,7 @@ export default class DateView extends React.Component<DateViewProps, any> {
         selectionMode: PropTypes.oneOf(['year', 'month', 'week', 'day']),
         showWeekNumber: PropTypes.bool,
         date: PropTypes.instanceOf(Date).isRequired,
-        onPick: PropTypes.func
+        onPick: PropTypes.func,
     };
 
     constructor(props: DateViewProps) {

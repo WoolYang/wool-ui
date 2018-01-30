@@ -12,6 +12,7 @@ export interface BasicPanelProps {
     name?: string;//名称
     format?: string;          //时间日期格式化
     selectionMode?: SelectionMode;   //日期类型
+    handleChange?: any;
 }
 
 export class BasicPanel extends React.Component<BasicPanelProps, any> {
@@ -20,9 +21,6 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
 
     static defaultProps = {
         prefixCls: 'wool-datepicker',
-        disabled: false,
-        readOnly: false,
-        clearable: true,
         format: 'yyyy-MM-dd',
         isShowTime: false,
         selectionMode: 'day',
@@ -33,6 +31,7 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
         currentView: PropTypes.string,
         format: PropTypes.string,
         selectionMode: PropTypes.oneOf(['year', 'month', 'week', 'day']),
+        handleChange: PropTypes.func
     };
 
     constructor(props: BasicPanelProps) {
@@ -61,15 +60,42 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
         return null
     }
 
+    prevMonth = () => {
+        const { date } = this.state;
+        const { handleChange } = this.props;
+
+        if (date.getMonth() == 0) {
+            date.setFullYear(date.getFullYear() - 1)
+            date.setMonth(11)
+        } else {
+            date.setMonth(date.getMonth() - 1)
+        }
+        handleChange({ date: date })
+
+    }
+
+    nextMonth = () => {
+        const { date } = this.state;
+        const { handleChange } = this.props;
+
+        if (date.getMonth() == 11) {
+            date.setFullYear(date.getFullYear() + 1)
+            date.setMonth(0)
+        } else {
+            date.setMonth(date.getMonth() + 1)
+        }
+        handleChange({ date: date })
+    }
+
     render() {
         const { prefixCls, date, currentView } = this.props;
 
         return (
             <div className={`${prefixCls}-header`}>
-                <i className='left-arrow' />
+                <i className='left-arrow' onClick={this.prevMonth} />
                 {this.yearLabel()}
                 {this.monthLabel()}
-                <i className='right-arrow' />
+                <i className='right-arrow' onClick={this.nextMonth} />
             </div >
         )
     }

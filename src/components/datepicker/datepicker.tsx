@@ -197,7 +197,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 <Transition name={prefixCls} >
                     <View show={visible}>
                         <div className={`${prefixCls}-dropdown`} >
-                            <BasicPanel date={date} currentView={currentView} />
+                            <BasicPanel date={date} currentView={currentView} handleChange={this.handleDatePick} />
                             <div className={`${prefixCls}-content`}>
                                 {visible ? this.pickerContent() : null}
                             </div>
