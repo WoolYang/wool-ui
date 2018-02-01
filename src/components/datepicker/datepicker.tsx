@@ -6,7 +6,7 @@ import { Transition, View } from '../libs';
 import { contains } from '../libs/utils/utils';
 import { BasicPanel } from './panel/index';
 import { DateView } from './view/index';
-import { SELECTION_MODE, PICKER_VIEWS } from "./utils/index";
+import { SELECTION_MODE, PICKER_VIEWS, toDate, formatDate } from "./utils/index";
 import './style/datePicker.less';
 
 export type SelectionMode = 'year' | 'month' | 'week' | 'day';
@@ -27,7 +27,8 @@ export interface DatePickerProps {
     shortcuts?: any;         //快捷选项
     selectionMode?: SelectionMode;   //日期类型
     showWeekNumber?: boolean;     //是否展示周数
-    onChange?: any;
+    onChange?: any; //日期改变
+    renderInput?: any; //自定义显示
 }
 
 export class DatePicker extends React.Component<DatePickerProps, any> {
@@ -43,11 +44,12 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         align: 'left',
         isShowTime: false,
         selectionMode: 'day',
-        showWeekNumber: true
+        showWeekNumber: true,
+        placeholder: '选择日期'
     }
 
     static propTypes = {
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+        value: PropTypes.instanceOf(Date),
         disabled: PropTypes.bool,
         readOnly: PropTypes.bool,
         placeholder: PropTypes.string,
@@ -61,6 +63,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         shortcuts: PropTypes.func,
         selectionMode: PropTypes.oneOf(['year', 'month', 'week', 'day']),
         showWeekNumber: PropTypes.bool,
+        renderInput: PropTypes.func
     };
 
     constructor(props: DatePickerProps) {
@@ -78,9 +81,47 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     }
 
+    componentWillReceiveProps(nextProps: DatePickerProps) {
+        let date = new Date()
+        if (nextProps.value) {
+            date = toDate(nextProps.value)
+        }
+
+        this.setState({ date })
+    }
+
     componentWillUnmount() {
         document.removeEventListener('click', this.handleOutClose);
     }
+
+    //日期get
+    get visibleDate() {
+        const { renderInput, value } = this.props;
+        return renderInput ? renderInput(value) : formatDate(value, this.dateFormat)
+    }
+    //默认格式化处理
+    get dateFormat() {
+        if (this.props.format) return this.props.format.replace('HH:mm', '').replace(':ss', '').trim()
+        else return 'yyyy-MM-dd'
+    }
+
+    //日期set 输入时使用 (暂未实现)
+    /*     set visibleDate(val) {
+            const ndate = parseDate(val, this.dateFormat);
+            const { date } = this.state;
+            if (!ndate) {
+                return
+            }
+             let { disabledDate } = this.props
+            if (typeof disabledDate === 'function' && disabledDate(ndate)) {
+                return
+            }
+            ndate.setHours(date.getHours())
+            ndate.setMinutes(date.getMinutes())
+            ndate.setSeconds(date.getSeconds())
+            this.setState({ date: ndate })
+            this.resetView()
+        } */
 
     //初始化视图状态
     initCurrentView() {
@@ -131,12 +172,8 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
     //清除选中项事件
     clearSelected = () => {
         const { onChange } = this.props;
-
-        onChange && onChange({ value: '', label: '' });
-
-        this.setState({
-            visible: false
-        });
+        onChange && onChange({ value: null });
+        this.setState({ visible: false });
     }
 
     //icon样式计算
@@ -171,9 +208,9 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     //年月日选择
     handleDatePick = ({ date }: { [key: string]: Date }) => {
-        this.setState({
-            date: date
-        })
+        const { onChange } = this.props;
+        onChange && onChange({ value: date })
+        this.setState({ date });
     }
 
     render() {
@@ -185,7 +222,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
             >
                 <Input
                     name={name}
-                    value={value}
+                    value={this.visibleDate}
                     readOnly={readOnly}
                     suffix={<i className={this.iconClass()} onClick={this.handleIconClick} onMouseEnter={this.handleMouseEnter} />}
                     onClick={this.handleToggle}

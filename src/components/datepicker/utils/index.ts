@@ -1,3 +1,4 @@
+import { DateUtils } from '../../libs/utils/utils';;
 //模式选择
 export const SELECTION_MODE: { [key: string]: any } = {
     YEAR: 'year',
@@ -84,4 +85,23 @@ export const getWeekNumber: Function = function (src: Date): number {
     date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7); //取当周周四
     const week1: Date = new Date(date.getFullYear(), 0, 4); //以1月4日为第一周
     return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+};
+
+//date类型转换
+export const toDate: Function = function (date: any): Date | null {
+    return isDate(date) ? new Date(date) : null;
+};
+
+//date类型判断
+export const isDate: Function = function (date: any): boolean {
+    if (date === null || date === undefined) return false;
+    if (isNaN(new Date(date).getTime())) return false;
+    return true;
+};
+
+//date格式化
+export const formatDate: Function = function (date: Date, format: string): string {
+    date = toDate(date);
+    if (!date) return '';
+    return DateUtils.format(date, format || 'yyyy-MM-dd');
 };

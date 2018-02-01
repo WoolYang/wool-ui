@@ -14,3 +14,5 @@ export function contains(elem: any, current: any) {
     }
     return false;
 };
+
+export { default as DateUtils } from './dateUtils'
