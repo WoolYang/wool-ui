@@ -25,6 +25,7 @@ export class DatePickerDemo extends React.Component<any, any> {
                     onChange={this.changeDate}
                     showWeekNumber={false}
                     format='YYYYMMMMDD'
+                    selectionMode='month'
                 />
             </div>
         )

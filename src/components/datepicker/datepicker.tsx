@@ -5,7 +5,7 @@ import { Input } from '../input/index';
 import { Transition, View } from '../libs';
 import { contains } from '../libs/utils/utils';
 import { BasicPanel } from './panel/index';
-import { DateView } from './view/index';
+import { DateView, MonthView } from './view/index';
 import { SELECTION_MODE, PICKER_VIEWS, toDate, formatDate } from "./utils/index";
 import './style/datePicker.less';
 
@@ -196,6 +196,13 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 result = (<DateView
                     selectionMode={selectionMode}
                     showWeekNumber={showWeekNumber}
+                    date={date}
+                    onPick={this.handleDatePick}
+                />)
+                break
+            case PICKER_VIEWS.MONTH:
+                result = (<MonthView
+                    selectionMode={selectionMode}
                     date={date}
                     onPick={this.handleDatePick}
                 />)
