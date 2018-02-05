@@ -193,7 +193,7 @@ export default class DateView extends React.Component<DateViewProps, any> {
         newDate.setDate(parseInt(text, 10));
 
         if (selectionMode === SELECTION_MODE.DAY || selectionMode === SELECTION_MODE.WEEK) {
-            onPick({ date: newDate })
+            onPick(newDate)
         }
 
     }

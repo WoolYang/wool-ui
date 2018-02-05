@@ -72,7 +72,8 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
             visible: false,
             inputHover: false,
             currentView: this.initCurrentView(), //当前视图
-            date: new Date() //当前日期
+            date: new Date(), //当前日期
+            keepState: false //用于组件切换手动设置显示状态，每次设置成功执行后再次恢复默认
         }
     }
 
@@ -139,9 +140,15 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     //点击外元素关闭事件
     handleOutClose = (e: any) => {
-        if (!contains(this.select, e.target)) {
+        const { visible, keepState } = this.state;
+        if (!visible) return
+        if (!contains(this.datepicker, e.target) && !keepState) {
             this.setState({ visible: false });
         }
+        if (keepState) {
+            this.setState({ keepState: false });
+        }
+
     }
 
     //icon点击事件
@@ -204,7 +211,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 result = (<MonthView
                     selectionMode={selectionMode}
                     date={date}
-                    onPick={this.handleDatePick}
+                    onPick={this.handleMonthPick}
                 />)
                 break
             default:
@@ -214,17 +221,35 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
     }
 
     //年月日选择
-    handleDatePick = ({ date }: { [key: string]: Date }) => {
+    handleDatePick = (date: Date) => {
         const { onChange } = this.props;
         onChange && onChange({ value: date })
-        this.setState({ date });
+    }
+
+    //月选择
+    handleMonthPick = (date: Date) => {
+        const { currentView } = this.state;
+        const { selectionMode, onChange } = this.props;
+
+        if (selectionMode !== SELECTION_MODE.MONTH) {
+            onChange && onChange({ value: date })
+            this.setState({ currentView: PICKER_VIEWS.DATE, keepState: true });
+        } else {
+            onChange && onChange({ value: new Date(date.getFullYear(), date.getMonth(), 1) })
+        }
+
+    }
+
+    //设置视图
+    setView = (view: string) => {
+        this.setState({ currentView: view, keepState: true })
     }
 
     render() {
         const { prefixCls, value, readOnly, disabled, placeholder, name, } = this.props;
         const { visible, date, currentView } = this.state;
         return (
-            <div ref={c => this.select = c}
+            <div ref={c => this.datepicker = c}
                 className={prefixCls}
             >
                 <Input
@@ -241,7 +266,12 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 <Transition name={prefixCls} >
                     <View show={visible}>
                         <div className={`${prefixCls}-dropdown`} >
-                            <BasicPanel date={date} currentView={currentView} handleChange={this.handleDatePick} />
+                            <BasicPanel
+                                date={date}
+                                currentView={currentView}
+                                handleChange={this.handleDatePick}
+                                showMonthPicker={this.setView}
+                            />
                             <div className={`${prefixCls}-content`}>
                                 {visible ? this.pickerContent() : null}
                             </div>

@@ -26,12 +26,32 @@ export default class MonthView extends React.Component<MonthViewProps, any> {
         onPick: PropTypes.func,
     };
 
-    constructor(props: MonthViewProps) {
-        super(props)
+    getCellStyle(month: number) {
+        const { date } = this.props
+        //    const ndate = new Date(date)
+        //   ndate.setMonth(month);
 
-        this.state = {
-            tableRows: [[], [], [], []],
-        }
+        //   style.disabled = typeof disabledDate === 'function' && disabledDate(ndate, SELECTION_MODES.MONTH);
+
+        const cellClass = classNames({
+            ['current']: date && date.getMonth() === month
+        });
+
+        return cellClass;
+    }
+
+    handleClick = (e: any) => {
+        const target = e.target;
+        const { date } = this.props;
+        if (target.tagName !== 'A') return;
+        if (target.parentNode.classList.contains('disabled')) return;
+        const column = target.parentNode.cellIndex;
+        const row = target.parentNode.parentNode.rowIndex;
+        const month = row * 4 + column;
+
+        const newDate = new Date(date);
+        newDate.setMonth(month)
+        this.props.onPick(newDate)
     }
 
     render() {
@@ -42,13 +62,13 @@ export default class MonthView extends React.Component<MonthViewProps, any> {
         return (
             <table
                 className={classNames(`${prefixCls}-monthtable`)}
-            /*  onClick={this.handleClick} */
+                onClick={this.handleClick}
             >
                 <tbody>
                     {
                         months.map((key, idx) => {
                             return (
-                                <td key={idx}>
+                                <td key={idx} className={this.getCellStyle(idx)}>
                                     <a className="cell">{key}</a>
                                 </td>
                             )

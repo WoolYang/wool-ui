@@ -61,7 +61,7 @@
         width: 260px;
         max-height: 292px;
         overflow-y: auto;
-        .@{datepicker}-header {
+        .@{datepicker}__header {
             margin: 12px;
             text-align: center;
             .left-arrow {
@@ -78,6 +78,14 @@
                 &:after {
                     &:extend(.wool-datepicker-arrow-icon);
                     transform: rotate(0deg) scale(1);
+                }
+            }
+            &-label {
+                padding: 0 5px;
+                text-align: center;
+                cursor: pointer;
+                &:hover {
+                    color: @lightBlue4;
                 }
             }
         }
@@ -131,6 +139,24 @@
                 background-color: @lightBlue4!important;
                 color: @white;
             }
+        }
+    }
+    &-monthtable {
+        td,
+        th {
+            text-align: center;
+            padding: 20px 3px;
+            cursor: pointer;
+        }
+        .cell {
+            width: 48px;
+            height: 32px;
+            display: block;
+            line-height: 32px;
+        }
+        .current a:not(.disabled) {
+            background-color: @lightBlue4!important;
+            color: @white;
         }
     }
 }
