@@ -55,13 +55,14 @@ module.exports = {
     devServer: {
         contentBase: "./examples",
         historyApiFallback: true,
-        inline: true
+        inline: true,
+        port: 8088
     },
     plugins: [
         new Nyan(),
         new webpack.HotModuleReplacementPlugin(),
         new openBrowserPlugin({
-            url: 'http://localhost:8080'
+            url: 'http://localhost:8088'
         })
     ]
 };

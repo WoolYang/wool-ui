@@ -42,7 +42,7 @@ export default class MonthView extends React.Component<MonthViewProps, any> {
 
     handleClick = (e: any) => {
         const target = e.target;
-        const { date } = this.props;
+        const { date, onPick } = this.props;
         if (target.tagName !== 'A') return;
         if (target.parentNode.classList.contains('disabled')) return;
         const column = target.parentNode.cellIndex;
@@ -51,7 +51,7 @@ export default class MonthView extends React.Component<MonthViewProps, any> {
 
         const newDate = new Date(date);
         newDate.setMonth(month)
-        this.props.onPick(newDate)
+        onPick(newDate)
     }
 
     render() {

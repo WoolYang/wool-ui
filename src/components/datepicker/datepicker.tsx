@@ -5,7 +5,7 @@ import { Input } from '../input/index';
 import { Transition, View } from '../libs';
 import { contains } from '../libs/utils/utils';
 import { BasicPanel } from './panel/index';
-import { DateView, MonthView } from './view/index';
+import { DateView, MonthView, YearView } from './view/index';
 import { SELECTION_MODE, PICKER_VIEWS, toDate, formatDate } from "./utils/index";
 import './style/datePicker.less';
 
@@ -214,6 +214,13 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                     onPick={this.handleMonthPick}
                 />)
                 break
+            case PICKER_VIEWS.YEAR:
+                result = (<YearView
+                    selectionMode={selectionMode}
+                    date={date}
+                    onPick={this.handleYearPick}
+                />)
+                break
             default:
                 throw new Error('invalid currentView value')
         }
@@ -232,6 +239,20 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         const { selectionMode, onChange } = this.props;
 
         if (selectionMode !== SELECTION_MODE.MONTH) {
+            onChange && onChange({ value: date })
+            this.setState({ currentView: PICKER_VIEWS.DATE, keepState: true });
+        } else {
+            onChange && onChange({ value: new Date(date.getFullYear(), date.getMonth(), 1) })
+        }
+
+    }
+
+    //年选择
+    handleYearPick = (date: Date) => {
+        const { currentView } = this.state;
+        const { selectionMode, onChange } = this.props;
+
+        if (selectionMode !== SELECTION_MODE.YEAR) {
             onChange && onChange({ value: date })
             this.setState({ currentView: PICKER_VIEWS.DATE, keepState: true });
         } else {
@@ -271,6 +292,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                                 currentView={currentView}
                                 handleChange={this.handleDatePick}
                                 showMonthPicker={this.setView}
+                                showYearPicker={this.setView}
                             />
                             <div className={`${prefixCls}-content`}>
                                 {visible ? this.pickerContent() : null}

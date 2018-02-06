@@ -14,6 +14,7 @@ export interface BasicPanelProps {
     selectionMode?: SelectionMode;   //日期类型
     handleChange?: any;
     showMonthPicker?: any;
+    showYearPicker?: any;
 }
 
 export class BasicPanel extends React.Component<BasicPanelProps, any> {
@@ -31,18 +32,29 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
         format: PropTypes.string,
         selectionMode: PropTypes.oneOf(['year', 'month', 'week', 'day']),
         handleChange: PropTypes.func,
-        showMonthPicker: PropTypes.func
+        showMonthPicker: PropTypes.func,
+        showYearPicker: PropTypes.func
     };
 
     //年显示标签
     yearLabel() {
-        const { date, prefixCls } = this.props
-        return <span className={`${prefixCls}__header-label`}>{date.getFullYear() + '年'}</span>
+        const { date, prefixCls, currentView } = this.props;
+        let displayYear = date.getFullYear() + '年'
+        if (currentView === PICKER_VIEWS.YEAR) {
+            const startYear = Math.floor(date.getFullYear() / 10) * 10
+            displayYear = `${startYear} 年-${startYear + 9} 年`
+        }
+        return <span className={`${prefixCls}__header-label`} onClick={this.showYearPicker} >{displayYear}</span>;
     }
 
     showMonthPicker = () => {
         const { showMonthPicker } = this.props;
         showMonthPicker && showMonthPicker(PICKER_VIEWS.MONTH)
+    }
+
+    showYearPicker = () => {
+        const { showYearPicker } = this.props;
+        showYearPicker && showYearPicker(PICKER_VIEWS.YEAR)
     }
 
     //月显示标签
