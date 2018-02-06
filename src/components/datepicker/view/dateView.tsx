@@ -11,7 +11,8 @@ import {
     getStartDateCellOfMonth,
     clearHours,
     getWeekNumber,
-    getOffsetToWeekOrigin
+    getOffsetToWeekOrigin,
+    isFunction
 } from "../utils/index";
 
 export type SelectionMode = 'year' | 'month' | 'week' | 'day';
@@ -21,6 +22,7 @@ export interface DateViewProps {
     date?: Date; //日期
     prefixCls?: string;
     onPick?: any;
+    disabledDate?: any
 }
 
 export default class DateView extends React.Component<DateViewProps, any> {
@@ -34,6 +36,7 @@ export default class DateView extends React.Component<DateViewProps, any> {
         showWeekNumber: PropTypes.bool,
         date: PropTypes.instanceOf(Date).isRequired,
         onPick: PropTypes.func,
+        disabledDate: PropTypes.func
     };
 
     constructor(props: DateViewProps) {
@@ -47,7 +50,7 @@ export default class DateView extends React.Component<DateViewProps, any> {
 
     //表格行列计算
     getRows() {
-        const { date, showWeekNumber, selectionMode } = this.props;
+        const { date, showWeekNumber, selectionMode, disabledDate } = this.props;
         const { tableRows, firstDayOfWeek } = this.state;
         //获取当前选择日期
         const ndate = new Date(date.getTime());
@@ -124,7 +127,7 @@ export default class DateView extends React.Component<DateViewProps, any> {
                         cell.type = 'next-month';
                     }
                 }
-                //cell.disabled = isFunction(disabledDate) && disabledDate(new Date(time), SELECTION_MODES.DAY);
+                cell.disabled = isFunction(disabledDate) && disabledDate(new Date(time), SELECTION_MODE.DAY);
             }
 
         }
@@ -134,13 +137,13 @@ export default class DateView extends React.Component<DateViewProps, any> {
 
     //单元格样式
     getCellClasses(cell: { [key: string]: any }) {
-        const { selectionMode, date } = this.props
+        const { selectionMode, date } = this.props;
         const cellClass = classNames({
             ['available']: (cell.type === 'normal' || cell.type === 'today') && !cell.disabled, //可用日期样式
             ['today']: cell.type === 'today',//今天样式
             ['prev-month']: cell.type === 'prev-month',//上个月样式
             ['next-month']: cell.type === 'next-month',//下个月样式
-            ['disabled']: cell.type === 'disabled',//不可选样式
+            ['disabled']: cell.disabled,//不可选样式
             ['current']: selectionMode === 'day' && (cell.type === 'normal' || cell.type === 'today') && date.getDate() === +cell.text//当前选择样式
         });
         return cellClass;

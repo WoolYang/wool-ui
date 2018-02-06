@@ -4,6 +4,7 @@ import * as classNames from 'classnames';
 import * as PropTypes from 'prop-types';
 import {
     SELECTION_MODE,
+    isFunction
 } from "../utils/index";
 
 export type SelectionMode = 'year' | 'month' | 'week' | 'day';
@@ -12,6 +13,7 @@ export interface MonthViewProps {
     date?: Date; //日期
     prefixCls?: string;
     onPick?: any;
+    disabledDate?: any
 }
 
 export default class MonthView extends React.Component<MonthViewProps, any> {
@@ -24,19 +26,18 @@ export default class MonthView extends React.Component<MonthViewProps, any> {
         selectionMode: PropTypes.oneOf(['year', 'month', 'week', 'day']),
         date: PropTypes.instanceOf(Date).isRequired,
         onPick: PropTypes.func,
+        disabledDate: PropTypes.func
     };
 
     getCellStyle(month: number) {
-        const { date } = this.props
-        //    const ndate = new Date(date)
-        //   ndate.setMonth(month);
+        const { date, disabledDate } = this.props;
 
-        //   style.disabled = typeof disabledDate === 'function' && disabledDate(ndate, SELECTION_MODES.MONTH);
-
+        const ndate = new Date(date)
+        ndate.setMonth(month);
         const cellClass = classNames({
-            ['current']: date && date.getMonth() === month
+            ['current']: date && date.getMonth() === month,
+            ['disabled']: isFunction(disabledDate) && disabledDate(ndate, SELECTION_MODE.MONTH)
         });
-
         return cellClass;
     }
 

@@ -22,13 +22,14 @@ export interface DatePickerProps {
     format?: string;          //时间日期格式化
     align?: Align;            //对齐方式
     isShowTime?: boolean;        //是否显示时间
-    onFocus?: any;
-    onBlur?: any;
+    onFocus?: any;              //焦点时触发
+    onBlur?: any;               //失去焦点时触发
     shortcuts?: any;         //快捷选项
     selectionMode?: SelectionMode;   //日期类型
     showWeekNumber?: boolean;     //是否展示周数
     onChange?: any; //日期改变
     renderInput?: any; //自定义显示
+    disabledDate?: any;
 }
 
 export class DatePicker extends React.Component<DatePickerProps, any> {
@@ -63,7 +64,8 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         shortcuts: PropTypes.func,
         selectionMode: PropTypes.oneOf(['year', 'month', 'week', 'day']),
         showWeekNumber: PropTypes.bool,
-        renderInput: PropTypes.func
+        renderInput: PropTypes.func,
+        disabledDate: PropTypes.func
     };
 
     constructor(props: DatePickerProps) {
@@ -140,7 +142,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     //点击外元素关闭事件
     handleOutClose = (e: any) => {
-        const { visible, keepState } = this.state;
+        const { visible, keepState, currentView } = this.state;
         if (!visible) return
         if (!contains(this.datepicker, e.target) && !keepState) {
             this.setState({ visible: false });
@@ -148,7 +150,6 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         if (keepState) {
             this.setState({ keepState: false });
         }
-
     }
 
     //icon点击事件
@@ -195,7 +196,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     //视图显示
     pickerContent() {
-        const { selectionMode, showWeekNumber } = this.props;
+        const { selectionMode, showWeekNumber, disabledDate } = this.props;
         const { currentView, date } = this.state;
         let result = null;
         switch (currentView) {
@@ -203,6 +204,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 result = (<DateView
                     selectionMode={selectionMode}
                     showWeekNumber={showWeekNumber}
+                    disabledDate={disabledDate}
                     date={date}
                     onPick={this.handleDatePick}
                 />)
@@ -210,6 +212,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
             case PICKER_VIEWS.MONTH:
                 result = (<MonthView
                     selectionMode={selectionMode}
+                    disabledDate={disabledDate}
                     date={date}
                     onPick={this.handleMonthPick}
                 />)
@@ -217,6 +220,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
             case PICKER_VIEWS.YEAR:
                 result = (<YearView
                     selectionMode={selectionMode}
+                    disabledDate={disabledDate}
                     date={date}
                     onPick={this.handleYearPick}
                 />)

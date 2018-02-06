@@ -105,3 +105,7 @@ export const formatDate: Function = function (date: Date, format: string): strin
     if (!date) return '';
     return DateUtils.format(date, format || 'yyyy-MM-dd');
 };
+
+export const isFunction = function (func: any): boolean {
+    return typeof func === 'function'
+}

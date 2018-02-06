@@ -12,6 +12,7 @@ export interface YearViewProps {
     date?: Date; //日期
     prefixCls?: string;
     onPick?: any;
+    disabledDate?: any
 }
 
 export default class YearView extends React.Component<YearViewProps, any> {
@@ -24,6 +25,7 @@ export default class YearView extends React.Component<YearViewProps, any> {
         selectionMode: PropTypes.oneOf(['year', 'month', 'week', 'day']),
         date: PropTypes.instanceOf(Date).isRequired,
         onPick: PropTypes.func,
+        disabledDate: PropTypes.func
     };
 
     getCellStyle(year: number | string) {
@@ -54,7 +56,7 @@ export default class YearView extends React.Component<YearViewProps, any> {
 
     getYearList() {
         const { date } = this.props;
-        const startYear = Math.floor(date.getFullYear() / 10) * 10;
+        const startYear: number = Math.floor(date.getFullYear() / 10) * 10;
         let yearList: Array<string | number> = ['', ''];
         for (let i = 9; i >= 0; i--) {
             yearList.push(startYear + i)

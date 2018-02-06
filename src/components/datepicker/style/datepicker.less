@@ -94,18 +94,6 @@
             margin: 15px;
         }
     }
-    &-disabled {
-        opacity: 0.5;
-        background-color: @white;
-        &:hover {
-            cursor: not-allowed;
-            background-color: @white;
-        }
-    }
-    &-selected {
-        background-color: @lightBlue4;
-        color: @white;
-    }
     &-enter-active,
     &-leave-active {
         opacity: 1;
@@ -140,6 +128,12 @@
                 color: @white;
             }
         }
+        .disabled {
+            background-color: @grey2;
+            opacity: 1;
+            cursor: not-allowed;
+            color: @grey4;
+        }
     }
     &-monthtable,
     &-yeartable {
@@ -148,6 +142,12 @@
             text-align: center;
             padding: 20px 3px;
             cursor: pointer;
+        }
+        .disabled>a {
+            background-color: @grey2;
+            opacity: 1;
+            cursor: not-allowed;
+            color: @grey4;
         }
         .cell {
             width: 48px;
