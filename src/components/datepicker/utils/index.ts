@@ -103,7 +103,7 @@ export const isDate: Function = function (date: any): boolean {
 export const formatDate: Function = function (date: Date, format: string): string {
     date = toDate(date);
     if (!date) return '';
-    return DateUtils.format(date, format || 'yyyy-MM-dd');
+    return DateUtils.format(date, getWeekNumber(date), format || 'yyyy-MM-dd');
 };
 
 export const isFunction = function (func: any): boolean {

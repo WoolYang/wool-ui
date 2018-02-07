@@ -232,6 +232,11 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         onChange && onChange({ value: date })
     }
 
+    //视图切换仅改变状态
+    handleDateStatePick = (date: Date) => {
+        this.setState({ date })
+    }
+
     //月选择
     handleMonthPick = (date: Date) => {
         const { currentView } = this.state;
@@ -290,7 +295,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                             <BasicPanel
                                 date={date}
                                 currentView={currentView}
-                                handleChange={this.handleDatePick}
+                                handleChange={this.handleDateStatePick}
                                 showMonthPicker={this.setView}
                                 showYearPicker={this.setView}
                             />

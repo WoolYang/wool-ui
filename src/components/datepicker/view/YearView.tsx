@@ -4,6 +4,7 @@ import * as classNames from 'classnames';
 import * as PropTypes from 'prop-types';
 import {
     SELECTION_MODE,
+    isFunction
 } from "../utils/index";
 
 export type SelectionMode = 'year' | 'month' | 'week' | 'day';
@@ -28,17 +29,15 @@ export default class YearView extends React.Component<YearViewProps, any> {
         disabledDate: PropTypes.func
     };
 
-    getCellStyle(year: number | string) {
-        const { date } = this.props
-        //    const ndate = new Date(date)
-        //   ndate.setMonth(month);
+    getCellStyle(year: number) {
+        const { date, disabledDate } = this.props;
 
-        //   style.disabled = typeof disabledDate === 'function' && disabledDate(ndate, SELECTION_MODES.MONTH);
-
+        const ndate = new Date(date);
+        ndate.setFullYear(year);
         const cellClass = classNames({
-            ['current']: date && date.getFullYear() == year
+            ['current']: date && date.getFullYear() == year,
+            ['disabled']: isFunction(disabledDate) && disabledDate(ndate, SELECTION_MODE.YEAR)
         });
-
         return cellClass;
     }
 
@@ -75,8 +74,8 @@ export default class YearView extends React.Component<YearViewProps, any> {
                     {
                         this.getYearList().map((key, idx) => {
                             return (
-                                <td key={idx} className={this.getCellStyle(key)}>
-                                    <a className="cell">{key}</a>
+                                <td key={idx} className={this.getCellStyle(Number(key))}>
+                                    {key && <a className="cell">{key}</a>}
                                 </td>
                             )
                         }).reduce((col, item) => {

@@ -127,6 +127,27 @@
                 background-color: @lightBlue4!important;
                 color: @white;
             }
+            .available:hover {
+                background-color: @grey2;
+            }
+        }
+        .current-row {
+            background-color: #d2ecff;
+            .start-date,
+            .end-date {
+                background-color: #20a0ff!important;
+                color: #fff;
+            }
+            .current:not(.disabled) {
+                background-color: @lightBlue4!important;
+                color: @white;
+            }
+            .available:hover {
+                background-color: #d2ecff;
+            }
+        }
+        .week-row:not(.current-row):hover {
+            background-color: @grey2;
         }
         .disabled {
             background-color: @grey2;
@@ -143,7 +164,7 @@
             padding: 20px 3px;
             cursor: pointer;
         }
-        .disabled>a {
+        .disabled a {
             background-color: @grey2;
             opacity: 1;
             cursor: not-allowed;
@@ -155,7 +176,7 @@
             display: block;
             line-height: 32px;
         }
-        .current a:not(.disabled) {
+        .current:not(.disabled) a {
             background-color: @lightBlue4!important;
             color: @white;
         }

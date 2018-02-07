@@ -48,6 +48,31 @@ export default class DateView extends React.Component<DateViewProps, any> {
         }
     }
 
+    //周选择是否在本周
+    isWeekActive(cell: any): boolean {
+        const { selectionMode, date } = this.props
+        if (selectionMode !== SELECTION_MODE.WEEK) return false;
+        if (!date) return false;
+
+        const newDate = new Date(date.getTime());
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth();
+
+        if (cell.type === 'prev-month') {
+            newDate.setMonth(month === 0 ? 11 : month - 1);
+            newDate.setFullYear(month === 0 ? year - 1 : year);
+        }
+
+        if (cell.type === 'next-month') {
+            newDate.setMonth(month === 11 ? 0 : month + 1);
+            newDate.setFullYear(month === 11 ? year + 1 : year);
+        }
+
+        newDate.setDate(parseInt(cell.text, 10));
+
+        return getWeekNumber(newDate) === getWeekNumber(date)
+    }
+
     //表格行列计算
     getRows() {
         const { date, showWeekNumber, selectionMode, disabledDate } = this.props;
@@ -129,6 +154,17 @@ export default class DateView extends React.Component<DateViewProps, any> {
                 }
                 cell.disabled = isFunction(disabledDate) && disabledDate(new Date(time), SELECTION_MODE.DAY);
             }
+            if (selectionMode === SELECTION_MODE.WEEK) {
+                const start = showWeekNumber ? 1 : 0;
+                const end = showWeekNumber ? 7 : 6;
+                const isWeekActive = this.isWeekActive(row[start + 1]);
+
+                row[start].inRange = isWeekActive;
+                row[start].start = isWeekActive;
+                row[end].inRange = isWeekActive;
+                row[end].end = isWeekActive;
+                row.isWeekActive = isWeekActive
+            }
 
         }
         rows.firstDayPosition = firstDayPosition;
@@ -144,7 +180,10 @@ export default class DateView extends React.Component<DateViewProps, any> {
             ['prev-month']: cell.type === 'prev-month',//上个月样式
             ['next-month']: cell.type === 'next-month',//下个月样式
             ['disabled']: cell.disabled,//不可选样式
-            ['current']: selectionMode === 'day' && (cell.type === 'normal' || cell.type === 'today') && date.getDate() === +cell.text//当前选择样式
+            ['current']: selectionMode === 'day' && (cell.type === 'normal' || cell.type === 'today') && date.getDate() === +cell.text,//当前选择样式
+            ['in-range']: cell.inRange && ((cell.type === 'normal' || cell.type === 'today') || selectionMode === 'week'),
+            ['start-date']: cell.inRange && ((cell.type === 'normal' || cell.type === 'today') || selectionMode === 'week'),
+            ['end-date']: cell.inRange && ((cell.type === 'normal' || cell.type === 'today') || selectionMode === 'week')
         });
         return cellClass;
     }
@@ -163,6 +202,10 @@ export default class DateView extends React.Component<DateViewProps, any> {
 
         const year = date.getFullYear();
         const month = date.getMonth();
+
+        if (selectionMode === 'week') {
+            target = target.parentNode.cells[1];
+        }
 
         const cellIndex = target.cellIndex; //列索引
         const rowIndex = target.parentNode.rowIndex - 1; //行索引
@@ -194,11 +237,18 @@ export default class DateView extends React.Component<DateViewProps, any> {
         }
         //设置选择日
         newDate.setDate(parseInt(text, 10));
-
         if (selectionMode === SELECTION_MODE.DAY || selectionMode === SELECTION_MODE.WEEK) {
             onPick(newDate)
         }
 
+    }
+
+    getRowClass(row: any) {
+        const { prefixCls, selectionMode } = this.props;
+        return classNames(`${prefixCls}-datetable-row`, {
+            ['current-row']: row.isWeekActive,
+            ['week-row']: selectionMode === 'week'
+        });
     }
 
     render() {
@@ -223,7 +273,7 @@ export default class DateView extends React.Component<DateViewProps, any> {
                         this.getRows().map((row: Array<{ [key: string]: any }>, index: number) => {
                             return (
                                 <tr key={index}
-                                    className={classNames(`${prefixCls}-datetable-row`)}
+                                    className={this.getRowClass(row)}
                                 >
                                     {
                                         row.map((cell: { [key: string]: any }, index: number) => (

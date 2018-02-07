@@ -74,30 +74,49 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
 
     prevMonth = () => {
         const { handleChange, date, currentView } = this.props;
-
         const newDate = new Date(date);
 
-        if (newDate.getMonth() == 0) {
-            newDate.setFullYear(newDate.getFullYear() - 1)
-            newDate.setMonth(11)
-        } else {
-            newDate.setMonth(newDate.getMonth() - 1)
+        switch (currentView) {
+            case PICKER_VIEWS.DATE:
+                if (newDate.getMonth() == 0) {
+                    newDate.setFullYear(newDate.getFullYear() - 1)
+                    newDate.setMonth(11)
+                } else {
+                    newDate.setMonth(newDate.getMonth() - 1)
+                }
+                break;
+            case PICKER_VIEWS.MONTH:
+                newDate.setFullYear(newDate.getFullYear() - 1)
+                break;
+            default:
+                newDate.setFullYear(newDate.getFullYear() - 10)
         }
+
         handleChange(newDate)
 
     }
 
     nextMonth = () => {
         const { handleChange, date, currentView } = this.props;
-
         const newDate = new Date(date);
-        if (newDate.getMonth() == 11) {
-            newDate.setFullYear(newDate.getFullYear() + 1)
-            newDate.setMonth(0)
-        } else {
-            newDate.setMonth(newDate.getMonth() + 1)
+
+        switch (currentView) {
+            case PICKER_VIEWS.DATE:
+                if (newDate.getMonth() == 11) {
+                    newDate.setFullYear(newDate.getFullYear() + 1);
+                    newDate.setMonth(0);
+                } else {
+                    newDate.setMonth(newDate.getMonth() + 1)
+                }
+                break;
+            case PICKER_VIEWS.MONTH:
+                newDate.setFullYear(newDate.getFullYear() + 1);
+                break;
+            default:
+                newDate.setFullYear(newDate.getFullYear() + 10)
         }
-        handleChange(newDate)
+
+        handleChange(newDate);
     }
 
     render() {

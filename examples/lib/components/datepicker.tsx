@@ -16,6 +16,7 @@ export class DatePickerDemo extends React.Component<any, any> {
     }
 
     handleDateValid = (currentDate: Date) => {
+        //  return currentDate
         return currentDate < new Date(1517846400000);
     }
 
@@ -28,8 +29,9 @@ export class DatePickerDemo extends React.Component<any, any> {
                     value={date}
                     onChange={this.changeDate}
                     showWeekNumber={false}
-                    format='YYYYMMMMDD'
-                    disabledDate={this.handleDateValid}
+                    format='YYYY第WW周'
+                    /*                     disabledDate={this.handleDateValid} */
+                    selectionMode="week"
                 />
             </div>
         )

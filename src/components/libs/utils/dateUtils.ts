@@ -1,7 +1,7 @@
 //日期工具
 let dateUtils: { [key: string]: any } = {};
 //日期替换正则
-let replaceRag = /d{1,2}|D{1,2}|M{1,4}|y{1,4}|Y{1,4}|W{1,4}|S{1,3}|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
+let replaceRag = /d{1,2}|D{1,2}|M{1,4}|y{1,4}|Y{1,4}|K{1,4}|W{1,2}|S{1,3}|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
 
 const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
 
@@ -18,13 +18,19 @@ function pad(val: number | string, len?: number) {
 
 //格式化方法
 let formatFlags: { [key: string]: any } = {
-    W: function (dateObj: Date) { //一位周
+    W: function (dateObj: Date, weekNumber: any) { //一位周
+        return weekNumber;
+    },
+    WW: function (dateObj: Date, weekNumber: any) { //二位周
+        return pad(weekNumber);
+    },
+    K: function (dateObj: Date) { //一位周
         return dateObj.getDay();
     },
-    WW: function (dateObj: Date) { //两位周
+    KK: function (dateObj: Date) { //两位周
         return pad(dateObj.getDay());
     },
-    WWWW: function (dateObj: Date) {//中文周
+    KKKK: function (dateObj: Date) {//中文周
         return '星期' + dayNames[dateObj.getDay()];
     },
     d: function (dateObj: Date) {//一位日
@@ -121,7 +127,7 @@ dateUtils.defaultFormat = {
 } as { [key: string]: any };
 
 //日期格式化
-dateUtils.format = function (dateObj: any, format: string) {
+dateUtils.format = function (dateObj: any, weekNumber: any, format: string) {
 
     if (typeof dateObj === 'number') {
         dateObj = new Date(dateObj);
@@ -135,7 +141,7 @@ dateUtils.format = function (dateObj: any, format: string) {
     format = dateUtils.defaultFormat[format] || format || dateUtils.defaultFormat.defaultDate;
 
     return format.replace(replaceRag, function ($0) {
-        return $0 in formatFlags ? formatFlags[$0](dateObj) : $0.slice(1, $0.length - 1);
+        return $0 in formatFlags ? formatFlags[$0](dateObj, weekNumber) : $0.slice(1, $0.length - 1);
     });
 };
 
