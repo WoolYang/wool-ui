@@ -60,16 +60,23 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
     //月显示标签
     monthLabel() {
         const { date, currentView, prefixCls } = this.props;
-        if (currentView === PICKER_VIEWS.DATE) {
-            return <span className={`${prefixCls}__header-label`} onClick={this.showMonthPicker} >{(date.getMonth() + 1) + '月'}</span>
-        }
-        return null
+        const style = currentView === PICKER_VIEWS.DATE ? { display: 'inline-block' } : { display: 'none' }
+        return (
+            <span
+                className={`${prefixCls}__header-label`}
+                onClick={this.showMonthPicker}
+                style={style}
+            >
+                {(date.getMonth() + 1) + '月'}
+            </span>
+        )
     }
 
     prevMonth = () => {
-        const { handleChange, date } = this.props;
+        const { handleChange, date, currentView } = this.props;
 
         const newDate = new Date(date);
+
         if (newDate.getMonth() == 0) {
             newDate.setFullYear(newDate.getFullYear() - 1)
             newDate.setMonth(11)
@@ -81,7 +88,7 @@ export class BasicPanel extends React.Component<BasicPanelProps, any> {
     }
 
     nextMonth = () => {
-        const { handleChange, date } = this.props;
+        const { handleChange, date, currentView } = this.props;
 
         const newDate = new Date(date);
         if (newDate.getMonth() == 11) {

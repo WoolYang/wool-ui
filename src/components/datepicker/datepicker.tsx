@@ -81,7 +81,6 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     componentDidMount() {
         document.addEventListener('click', this.handleOutClose);
-
     }
 
     componentWillReceiveProps(nextProps: DatePickerProps) {
@@ -89,7 +88,6 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         if (nextProps.value) {
             date = toDate(nextProps.value)
         }
-
         this.setState({ date })
     }
 
@@ -145,7 +143,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
         const { visible, keepState, currentView } = this.state;
         if (!visible) return
         if (!contains(this.datepicker, e.target) && !keepState) {
-            this.setState({ visible: false });
+            this.setState({ visible: false, currentView: this.initCurrentView() });
         }
         if (keepState) {
             this.setState({ keepState: false });
@@ -161,10 +159,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     //切换下拉框显示
     handleToggle = (e?: any) => {
-        this.setState((prev: any) => {
-            prev.visible = !this.state.visible;
-            return prev;
-        });
+        this.setState({ visible: true })
     }
 
     //鼠标进入事件
@@ -267,7 +262,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
 
     //设置视图
     setView = (view: string) => {
-        this.setState({ currentView: view, keepState: true })
+        this.setState({ currentView: view })
     }
 
     render() {
@@ -278,6 +273,7 @@ export class DatePicker extends React.Component<DatePickerProps, any> {
                 className={prefixCls}
             >
                 <Input
+                    ref="input"
                     name={name}
                     value={this.visibleDate}
                     readOnly={readOnly}
