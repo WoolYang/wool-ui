@@ -29,7 +29,7 @@ export interface DatePickerProps {
     showWeekNumber?: boolean;     //是否展示周数
     onChange?: any; //日期改变
     renderInput?: any; //自定义显示
-    disabledDate?: any;
+    disabledDate?: any; //日期禁用
 }
 
 export class DatePicker extends React.Component<DatePickerProps, any> {
