@@ -8,6 +8,7 @@ import { Row, Col } from './grid/index';
 import { Select, Option } from './select/index';
 import { Transfer } from './transfer/index';
 import { DatePicker } from './datePicker/index';
+import { Switch } from './switch/index';
 
 import "../style/public.less";
 
@@ -26,5 +27,6 @@ export {
     Select,
     Option,
     Transfer,
-    DatePicker
+    DatePicker,
+    Switch
 };

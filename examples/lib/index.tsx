@@ -8,6 +8,7 @@ import { GridDemo } from './components/grid';
 import { SelectDemo } from './components/select';
 import { TransferDemo } from './components/transfer';
 import { DatePickerDemo } from './components/datepicker';
+import { SwitchDemo } from './components/switch';
 
 import '../style/style.less'
 
@@ -15,7 +16,7 @@ class Example extends React.Component {
     render() {
         return (
             <div>
-                <DatePickerDemo />
+                <SwitchDemo />
             </div>
         )
     }
