@@ -18,8 +18,8 @@ export interface SwitchProps {
 export class Switch extends React.Component<SwitchProps, any> {
 
     static defaultProps = {
-        onContent: 'on',
-        offContent: 'off',
+        onContent: '',
+        offContent: '',
         disabled: false,
         prefixCls: 'wool-switch',
     }
