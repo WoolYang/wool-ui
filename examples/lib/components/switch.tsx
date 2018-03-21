@@ -10,11 +10,19 @@ export class SwitchDemo extends React.Component<any, any> {
         }
     }
 
-    render() {
+    onChange = ({ checked }: any) => {
+        console.log(`switch to ${checked}`);
+    }
 
+    render() {
         return (
-            <div style={{ width: '200px', margin: '0 auto' }}>
-                <Switch />
+            <div>
+                <div style={{ width: '200px', margin: '0 auto' }}>
+                    <Switch onChange={this.onChange} />
+                </div>
+                <div style={{ width: '200px', margin: '0 auto' }}>
+                    <Switch disabled={true} defaultChecked={true} onChange={this.onChange} />
+                </div>
             </div>
         )
     }

@@ -10,7 +10,7 @@ export interface SwitchProps {
     onContent?: any;
     offContent?: any;
     disabled?: boolean;
-    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    onChange?: any;
     onFocus?: React.FormEventHandler<any>;
     onBlur?: React.FormEventHandler<any>;
 }
@@ -18,7 +18,6 @@ export interface SwitchProps {
 export class Switch extends React.Component<SwitchProps, any> {
 
     static defaultProps = {
-        defaultChecked: true,
         onContent: 'on',
         offContent: 'off',
         disabled: false,
@@ -35,14 +34,41 @@ export class Switch extends React.Component<SwitchProps, any> {
         onFocus: PropTypes.func,
         onBlur: PropTypes.func
     };
+
+    constructor(props: SwitchProps) {
+        super(props);
+
+        this.state = {
+            checked: this.props.defaultChecked,
+        };
+    }
+
+    onChange = () => {
+        const { onChange, disabled } = this.props;
+        const { checked } = this.state;
+        if (disabled) {
+            return
+        }
+
+        this.setState((prev: any) => {
+            prev.checked = !prev.checked;
+            return prev;
+        }, () => onChange && onChange({ checked }))
+
+    }
+
     render() {
-        const { prefixCls, checked, onContent, offContent } = this.props;
-        const classes = classNames(
-            prefixCls
+        const { prefixCls, onContent, offContent, disabled } = this.props;
+        const { checked } = this.state;
+        const classes = classNames(prefixCls, {
+            [`${prefixCls}-checked`]: checked,
+            [`${prefixCls}-disabled`]: disabled
+        }
+
         );
 
         return (
-            <span className={classes}>
+            <span className={classes} onClick={this.onChange}>
                 <span className={`${prefixCls}-inner`}>{checked ? onContent : offContent}</span>
             </span>
         )
