@@ -53,8 +53,8 @@ export class Switch extends React.Component<SwitchProps, any> {
         this.setState((prev: any) => {
             prev.checked = !prev.checked;
             return prev;
-        }, () => onChange && onChange({ checked }))
-
+        })
+        onChange && onChange({ checked: !checked })
     }
 
     render() {
