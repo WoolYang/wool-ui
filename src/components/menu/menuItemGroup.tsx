@@ -9,7 +9,7 @@ export interface MenuItemGroupProps {
     prefixCls: string;
 }
 
-export class MenuItemGroup extends MixinComponent<MenuItemGroupProps, any> {
+export class MenuItemGroup extends MixinComponent {
 
     [x: string]: any;
     instanceType: string;
