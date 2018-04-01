@@ -8,10 +8,10 @@ export interface MenuItemProps {
 
 export class MenuItem extends React.Component<MenuItemProps, any> {
 
-    constructor(props: Object) {
+    constructor(props: MenuItemProps) {
         super(props);
 
-    //    this.instanceType = 'MenuItem';
+        //    this.instanceType = 'MenuItem';
     }
 
     componentDidMount() {
@@ -30,7 +30,7 @@ export class MenuItem extends React.Component<MenuItemProps, any> {
         return this.props.index === this.rootMenu().state.activeIndex;
     }
 
-    render(){
+    render() {
         return (
             <li
                 style={this.style()}

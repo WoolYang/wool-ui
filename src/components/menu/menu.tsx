@@ -88,7 +88,7 @@ export class Menu extends React.Component<MenuProps, any> {
         });
     }
 
-    handleSelect(index: number, indexPath: Array<number>, instance: Component): void {
+    handleSelect(index: number, indexPath: Array<number>, instance: React.Component): void {
         const { activeIndex, openedMenus, submenus } = this.state;
         const { onSelect } = this.props;
         onSelect && onSelect(index, indexPath, instance);
