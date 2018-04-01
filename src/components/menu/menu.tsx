@@ -14,6 +14,10 @@ export interface MenuProps {
 }
 
 export class Menu extends React.Component<MenuProps, any> {
+
+    [x: string]: any;
+    instanceType: string;
+
     static defaultProps = {
         menuTrigger: 'hover',
         prefixCls: 'wool-menu'
@@ -32,13 +36,17 @@ export class Menu extends React.Component<MenuProps, any> {
 
     constructor(props: MenuProps) {
         super(props);
-
+        this.instanceType = 'Menu';
         this.state = {
             activeIndex: props.defaultActive,
-            openedMenus: props.defaultOpeneds ? props.defaultOpeneds.slice(0) : [],
+            openedMenus: props.defaultOpeneds ? props.defaultOpeneds.slice() : [],
             menuItems: {},
             submenus: {}
         }
+    }
+
+    getChildContext(): { component: Menu } {
+        return { component: this };
     }
 
     componentDidMount() {
@@ -58,6 +66,7 @@ export class Menu extends React.Component<MenuProps, any> {
         }
     }
 
+    //设置默认展开菜单
     defaultActiveChanged(value: number): void {
         const { menuItems } = this.state;
 
@@ -138,7 +147,7 @@ export class Menu extends React.Component<MenuProps, any> {
         return (
             <ul
                 style={this.style()}
-                className={this.className(`${prefixCls}`)}
+                className={classNames(`${prefixCls}`)}
             >
                 {children}
             </ul>

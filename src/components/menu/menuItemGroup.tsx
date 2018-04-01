@@ -11,6 +11,9 @@ export interface MenuItemGroupProps {
 
 export class MenuItemGroup extends MixinComponent<MenuItemGroupProps, any> {
 
+    [x: string]: any;
+    instanceType: string;
+
     static defaultProps = {
         prefixCls: 'wool-menu-group'
     };
@@ -21,7 +24,7 @@ export class MenuItemGroup extends MixinComponent<MenuItemGroupProps, any> {
 
     constructor(props: MenuItemGroupProps) {
         super(props);
-        // this.instanceType = 'MenuItemGroup';
+        this.instanceType = 'MenuItemGroup';
         this.state = {
             paddingLeft: 20
         }
@@ -50,7 +53,7 @@ export class MenuItemGroup extends MixinComponent<MenuItemGroupProps, any> {
 
     render() {
         const { paddingLeft } = this.state;
-        const { title, children } = this.props;
+        const { prefixCls, title, children } = this.props;
 
         return (
             <li style={this.style()} className={this.className(`${prefixCls}`)}>
