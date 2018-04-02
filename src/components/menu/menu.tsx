@@ -1,16 +1,20 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
+import { SubMenu } from './subMenu';
+import { MenuItem } from './menuItem';
+import { MenuItemGroup } from './menuItemGroup';
 import './style/menu.less';
 
 export interface MenuProps {
-    defaultActive?: number; //当前激活菜单的 index
+    defaultActive?: number | string; //当前激活菜单的 index
     defaultOpeneds?: Array<any>; //当前打开的submenu的 key 数组
     uniqueOpened?: boolean; //是否只保持一个子菜单的展开
     onSelect?: any; //菜单激活回调
     onOpen?: any;//SubMenu 展开的回调
     onClose?: any;//SubMenu 收起的回调
-    prefixCls: string;
+    prefixCls?: string;
+    children?: any;
 }
 
 export class Menu extends React.Component<MenuProps, any> {
@@ -18,13 +22,21 @@ export class Menu extends React.Component<MenuProps, any> {
     [x: string]: any;
     instanceType: string;
 
+    static Item = MenuItem;
+    static SubMenu = SubMenu;
+    static ItemGroup = MenuItemGroup;
+
+    static childContextTypes = {
+        component: PropTypes.object,
+    };
+
     static defaultProps = {
         menuTrigger: 'hover',
         prefixCls: 'wool-menu'
     };
 
     static propTypes = {
-        defaultActive: PropTypes.number,
+        defaultActive: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         defaultOpeneds: PropTypes.arrayOf(PropTypes.any),
         uniqueOpened: PropTypes.bool,
         menuTrigger: PropTypes.string,
@@ -67,7 +79,7 @@ export class Menu extends React.Component<MenuProps, any> {
     }
 
     //设置默认展开菜单
-    defaultActiveChanged(value: number): void {
+    defaultActiveChanged(value: number | string): void {
         const { menuItems } = this.state;
 
         this.setState({ activeIndex: value }, () => {
@@ -97,7 +109,7 @@ export class Menu extends React.Component<MenuProps, any> {
         });
     }
 
-    handleSelect(index: number, indexPath: Array<number>, instance: React.Component): void {
+    handleSelect(index: number | string, indexPath: Array<number>, instance: React.Component): void {
         const { activeIndex, openedMenus, submenus } = this.state;
         const { onSelect } = this.props;
         onSelect && onSelect(index, indexPath, instance);
@@ -146,7 +158,6 @@ export class Menu extends React.Component<MenuProps, any> {
         const { prefixCls, children } = this.props;
         return (
             <ul
-                style={this.style()}
                 className={classNames(`${prefixCls}`)}
             >
                 {children}

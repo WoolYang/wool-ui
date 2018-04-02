@@ -1,17 +1,21 @@
 import * as React from 'react';
-import './style/hello.less';
+import * as classNames from 'classnames';
+import MixinComponent from './mixinComponent';
+import './style/menu.less';
 
 export interface MenuItemProps {
     index: string;
     disabled: boolean;
 }
 
-export class MenuItem extends React.Component<MenuItemProps, any> {
+export class MenuItem extends MixinComponent {
+
+    [x: string]: any;
+    instanceType: string;
 
     constructor(props: MenuItemProps) {
         super(props);
-
-        //    this.instanceType = 'MenuItem';
+        this.instanceType = 'MenuItem';
     }
 
     componentDidMount() {
@@ -32,12 +36,10 @@ export class MenuItem extends React.Component<MenuItemProps, any> {
 
     render() {
         return (
-            <li
-                style={this.style()}
-                className={this.className("el-menu-item", {
-                    'is-active': this.active(),
-                    'is-disabled': this.props.disabled
-                })}
+            <li className={classNames("el-menu-item", {
+                'is-active': this.active(),
+                'is-disabled': this.props.disabled
+            })}
                 onClick={this.handleClick.bind(this)}
             >
                 {this.props.children}

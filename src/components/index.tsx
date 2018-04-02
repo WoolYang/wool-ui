@@ -9,6 +9,7 @@ import { Select, Option } from './select/index';
 import { Transfer } from './transfer/index';
 import { DatePicker } from './datePicker/index';
 import { Switch } from './switch/index';
+import { Menu } from './menu/index';
 
 import "../style/public.less";
 
@@ -28,5 +29,6 @@ export {
     Option,
     Transfer,
     DatePicker,
-    Switch
+    Switch,
+    Menu
 };

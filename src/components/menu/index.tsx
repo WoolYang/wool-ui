@@ -1,6 +1,6 @@
 import { Menu } from './menu';
 import { MenuItem } from './menuItem';
 import { MenuItemGroup } from './menuItemGroup';
-import { Submenu } from './submenu';
+import { SubMenu } from './subMenu';
 
-export { Menu, MenuItem, MenuItemGroup, Submenu };
+export { Menu, MenuItem, MenuItemGroup, SubMenu };

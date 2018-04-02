@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
-import { Transition, View } from '../libs';
 import MixinComponent from './mixinComponent';
 import './style/menu.less';
 
@@ -21,6 +20,10 @@ export class SubMenu extends MixinComponent {
             active: false
         };
     }
+
+    static childContextTypes = {
+        component: PropTypes.object,
+    };
 
     getChildContext(): { component: SubMenu } {
         return {
@@ -61,7 +64,7 @@ export class SubMenu extends MixinComponent {
 
     initEvents(): void {
         const triggerElm = this.refs['submenu-title'];
-        triggerElm.addEventListener('click', this.handleClick.bind(this));
+        // triggerElm.addEventListener('click', this.handleClick.bind(this));
     }
 
     opened(): boolean {
@@ -70,13 +73,13 @@ export class SubMenu extends MixinComponent {
 
     render() {
         return (
-            <li style={this.style()} className={this.className('el-submenu', {
+            <li className={classNames('el-submenu', {
                 'is-active': this.state.active,
                 'is-opened': this.opened()
             })}>
                 <div ref="submenu-title" className="el-submenu__title">
                     {this.props.title}
-                    <i className={this.classNames('el-submenu__icon-arrow el-icon-arrow-down')}>
+                    <i className={classNames('el-submenu__icon-arrow el-icon-arrow-down')}>
                     </i>
                 </div>
                 <div style={{ display: this.opened() ? 'block' : 'none' }}>

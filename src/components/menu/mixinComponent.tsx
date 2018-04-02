@@ -2,9 +2,16 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
 export default class MixinComponent extends React.Component<any, any> {
-    parent(): React.Component {
+
+    static contextTypes = {
+        component: PropTypes.object,
+    };
+
+    parent() {
+        console.log(this.context.component)
         return this.context.component;
     }
+
 
     indexPath(): Array<number> {
         let path: Array<number> = [this.props.index];
@@ -21,7 +28,7 @@ export default class MixinComponent extends React.Component<any, any> {
         return path;
     }
 
-    rootMenu(): React.Component {
+    rootMenu() {
         let parent: any = this.parent();
 
         while (parent.instanceType !== 'Menu') {

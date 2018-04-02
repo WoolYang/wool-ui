@@ -35,7 +35,7 @@ export class MenuItemGroup extends MixinComponent {
     }
 
     initPadding(): void {
-        let level = 0, parent = this.parent(), component = parent.instanceType;
+        let level = 0, parent: any = this.parent(), component = parent.instanceType;
 
         while (component !== 'Menu') {
             if (component === 'SubMenu') {
@@ -56,7 +56,7 @@ export class MenuItemGroup extends MixinComponent {
         const { prefixCls, title, children } = this.props;
 
         return (
-            <li style={this.style()} className={this.className(`${prefixCls}`)}>
+            <li className={classNames(`${prefixCls}`)}>
                 <div className="el-menu-item-group__title" style={{
                     paddingLeft: paddingLeft
                 }}>{title}</div>
