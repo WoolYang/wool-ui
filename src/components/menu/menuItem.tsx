@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import * as classNames from 'classnames';
 import MixinComponent from './mixinComponent';
 import './style/menu.less';
@@ -13,6 +14,16 @@ export class MenuItem extends MixinComponent {
     [x: string]: any;
     instanceType: string;
 
+    static propTypes = {
+        prefixCls: PropTypes.string,
+        disabled: PropTypes.bool,
+        index: PropTypes.string
+    };
+
+    static defaultProps = {
+        prefixCls: 'wool-menu-item'
+    };
+
     constructor(props: MenuItemProps) {
         super(props);
         this.instanceType = 'MenuItem';
@@ -23,11 +34,7 @@ export class MenuItem extends MixinComponent {
     }
 
     handleClick(): void {
-        this.rootMenu().handleSelect(
-            this.props.index,
-            this.indexPath(),
-            this
-        );
+        this.rootMenu().handleSelect(this.props.index, this.indexPath(), this);
     }
 
     active(): boolean {
@@ -35,14 +42,16 @@ export class MenuItem extends MixinComponent {
     }
 
     render() {
+        const { prefixCls, disabled, children } = this.props;
+
         return (
-            <li className={classNames("el-menu-item", {
+            <li className={classNames(prefixCls, {
                 'is-active': this.active(),
-                'is-disabled': this.props.disabled
+                'is-disabled': disabled
             })}
                 onClick={this.handleClick.bind(this)}
             >
-                {this.props.children}
+                {children}
             </li>
         )
     }

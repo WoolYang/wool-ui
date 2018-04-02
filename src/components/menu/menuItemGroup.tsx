@@ -56,10 +56,8 @@ export class MenuItemGroup extends MixinComponent {
         const { prefixCls, title, children } = this.props;
 
         return (
-            <li className={classNames(`${prefixCls}`)}>
-                <div className="el-menu-item-group__title" style={{
-                    paddingLeft: paddingLeft
-                }}>{title}</div>
+            <li className={prefixCls}>
+                <div className={`${prefixCls}_title`} style={{ paddingLeft }}>{title}</div>
                 <ul>
                     {children}
                 </ul>

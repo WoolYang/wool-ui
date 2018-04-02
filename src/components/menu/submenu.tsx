@@ -4,7 +4,11 @@ import * as classNames from 'classnames';
 import MixinComponent from './mixinComponent';
 import './style/menu.less';
 
-export interface SubMenuProps { compiler: string; framework: string; }
+export interface SubMenuProps {
+    prefixCls?: string;
+    title?: any;
+    index?: string
+}
 
 export class SubMenu extends MixinComponent {
 
@@ -21,6 +25,16 @@ export class SubMenu extends MixinComponent {
         };
     }
 
+    static defaultProps = {
+        prefixCls: 'wool-submenu'
+    };
+
+    static propTypes = {
+        prefixCls: PropTypes.string,
+        title: PropTypes.any,
+        index: PropTypes.string
+    };
+
     static childContextTypes = {
         component: PropTypes.object,
     };
@@ -33,38 +47,10 @@ export class SubMenu extends MixinComponent {
 
     componentDidMount() {
         this.rootMenu().state.submenus[this.props.index] = this;
-        this.initEvents();
     }
 
-    onItemSelect(index: number, indexPath: Array<number>): void {
-        this.setState({
-            active: indexPath.indexOf(this.props.index) !== -1
-        });
-    }
-
-    handleClick(): void {
+    handleClick = () => {
         this.rootMenu().handleSubmenuClick(this.props.index, this.indexPath());
-    }
-
-    handleMouseenter(): void {
-        clearTimeout(this.timeout);
-
-        this.timeout = setTimeout(() => {
-            this.rootMenu().openMenu(this.props.index, this.indexPath());
-        }, 300);
-    }
-
-    handleMouseleave(): void {
-        clearTimeout(this.timeout);
-
-        this.timeout = setTimeout(() => {
-            this.rootMenu().closeMenu(this.props.index, this.indexPath());
-        }, 300);
-    }
-
-    initEvents(): void {
-        const triggerElm = this.refs['submenu-title'];
-        // triggerElm.addEventListener('click', this.handleClick.bind(this));
     }
 
     opened(): boolean {
@@ -72,18 +58,20 @@ export class SubMenu extends MixinComponent {
     }
 
     render() {
+        const { prefixCls, title, children } = this.props;
+        const { active } = this.state;
         return (
-            <li className={classNames('el-submenu', {
-                'is-active': this.state.active,
+            <li className={classNames(prefixCls, {
+                'is-active': active,
                 'is-opened': this.opened()
             })}>
-                <div ref="submenu-title" className="el-submenu__title">
-                    {this.props.title}
-                    <i className={classNames('el-submenu__icon-arrow el-icon-arrow-down')}>
+                <div onClick={this.handleClick} className={`${prefixCls}_title`}>
+                    {title}
+                    <i className={classNames(this.opened() ? 'up-arrow' : 'down-arrow')}>
                     </i>
                 </div>
                 <div style={{ display: this.opened() ? 'block' : 'none' }}>
-                    <ul className="el-menu">{this.props.children}</ul>
+                    <ul className="wool-menu">{children}</ul>
                 </div>
             </li>
         );

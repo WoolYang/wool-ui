@@ -8,7 +8,6 @@ export default class MixinComponent extends React.Component<any, any> {
     };
 
     parent() {
-        console.log(this.context.component)
         return this.context.component;
     }
 
@@ -24,7 +23,6 @@ export default class MixinComponent extends React.Component<any, any> {
 
             parent = parent.parent();
         }
-
         return path;
     }
 

@@ -7,6 +7,8 @@ import { MenuItemGroup } from './menuItemGroup';
 import './style/menu.less';
 
 export interface MenuProps {
+    className?: string; //样式
+    style?: object;
     defaultActive?: number | string; //当前激活菜单的 index
     defaultOpeneds?: Array<any>; //当前打开的submenu的 key 数组
     uniqueOpened?: boolean; //是否只保持一个子菜单的展开
@@ -43,7 +45,9 @@ export class Menu extends React.Component<MenuProps, any> {
         onSelect: PropTypes.func,
         onOpen: PropTypes.func,
         onClose: PropTypes.func,
-        prefixCls: PropTypes.string
+        prefixCls: PropTypes.string,
+        className: PropTypes.string,
+        style: PropTypes.object
     };
 
     constructor(props: MenuProps) {
@@ -92,6 +96,7 @@ export class Menu extends React.Component<MenuProps, any> {
         });
     }
 
+    //修改默认展开菜单
     defaultOpenedsChanged(value: Array<any>): void {
         this.setState({ openedMenus: value });
     }
@@ -109,6 +114,7 @@ export class Menu extends React.Component<MenuProps, any> {
         });
     }
 
+    //菜单选择
     handleSelect(index: number | string, indexPath: Array<number>, instance: React.Component): void {
         const { activeIndex, openedMenus, submenus } = this.state;
         const { onSelect } = this.props;
@@ -130,14 +136,15 @@ export class Menu extends React.Component<MenuProps, any> {
                 return indexPath.indexOf(index) !== -1;
             });
         }
-        openedMenus.push(index);
+        openedMenusFilter.push(index);
         this.setState({ openedMenus: openedMenusFilter });
     }
 
+    //点击子菜单
     handleSubmenuClick(index: number, indexPath: Array<number>): void {
         const { onOpen, onClose } = this.props;
         const { openedMenus } = this.state;
-        let isOpened = this.state.openedMenus.indexOf(index) !== -1;
+        let isOpened = openedMenus.indexOf(index) !== -1;
 
         if (isOpened) {
             this.closeMenu(index);
@@ -148,6 +155,7 @@ export class Menu extends React.Component<MenuProps, any> {
         }
     }
 
+    //关闭菜单
     closeMenu(index: number): void {
         const { openedMenus } = this.state;
         openedMenus.splice(openedMenus.indexOf(index), 1);
@@ -155,10 +163,11 @@ export class Menu extends React.Component<MenuProps, any> {
     }
 
     render() {
-        const { prefixCls, children } = this.props;
+        const { prefixCls, children, className, style } = this.props;
         return (
             <ul
-                className={classNames(`${prefixCls}`)}
+                style={style}
+                className={classNames(prefixCls, className)}
             >
                 {children}
             </ul>
