@@ -11,18 +11,23 @@ import { DatePickerDemo } from './components/datepicker';
 import { SwitchDemo } from './components/switch';
 import { MenuDemo } from './components/menu';
 
-import '../style/style.less'
+import { Header } from './pages/header/header';
+import { Sidebar } from './pages/sidebar/sidebar';
+import '../style/public.less'
 
-class Example extends React.Component {
+class Index extends React.Component {
     render() {
         return (
             <div>
-                <MenuDemo />
+                <Header />
+                <div className="main container">
+                    <Sidebar />
+                </div>
             </div>
         )
     }
 }
 
 ReactDOM.render(
-    <Example />, document.querySelector(".main")
+    <Index />, document.querySelector(".app")
 );
