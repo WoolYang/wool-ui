@@ -6,9 +6,9 @@ const WebpackDevMiddleware = require("webpack-dev-middleware");
 const openBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
-    entry: './examples/lib/index.tsx',
+    entry: './examples/src/index.tsx',
     output: {
-        path: path.resolve(__dirname, 'examples/lib'),
+        path: path.resolve(__dirname, 'examples/src'),
         filename: 'bundle.js'
     },
     devtool: "source-map",

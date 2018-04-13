@@ -8,7 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, './lib'),
         filename: 'bundle.js',
         library: 'bundle',
-        libraryTarget: 'umd',
+        libraryTarget: 'umd', //通用模块定义，兼容AMD，CommonJS和一般的全局定义
         umdNamedDefine: true
     },
     resolve: {
