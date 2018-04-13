@@ -173,7 +173,7 @@ export class Transition extends React.Component<TransitionProps, any> {
     toggleHidden() {
         const { onLeave } = this.props;
         const { leave, leaveActive, leaveTo, enterActive, enterTo } = this.transitionClass;
-        const childDOM = ReactDOM.findDOMNode(this.el);
+        const childDOM: any = ReactDOM.findDOMNode(this.el);
 
         childDOM.addEventListener('transitionend', this.didLeave);
         childDOM.addEventListener('animationend', this.didLeave);

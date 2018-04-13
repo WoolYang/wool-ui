@@ -4,7 +4,7 @@ import { Row, Col } from '../../../src/components/index';
 
 export class GridDemo extends React.Component {
     render() {
-        const style = {
+        const style: any = {
             height: '30px',
             lineHeight: '30px',
             backgroundColor: 'rgba(0,160,233,.7)',
