@@ -15,7 +15,7 @@ export class Sidebar extends React.Component {
 
         return (
             <div className='side-nav'>
-                <Menu defaultOpeneds={['1', '2']} style={style}>
+                <Menu className='menu' defaultOpeneds={['1', '2']} style={style}>
                     <Menu.SubMenu index="1" title="开发指南">
                         <Menu.Item index="1-1"> <NavLink to=''>快速上手</NavLink></Menu.Item>
                     </Menu.SubMenu>

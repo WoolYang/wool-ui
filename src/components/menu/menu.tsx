@@ -128,7 +128,7 @@ export class Menu extends React.Component<MenuProps, any> {
     //具体打开菜单
     openMenu(index: number, indexPath: Array<number>): void {
         const { openedMenus } = this.state;
-        let openedMenusFilter = [];
+        let openedMenusFilter = openedMenus.slice();
         if (openedMenus.indexOf(index) !== -1) return;
         // 将不在该菜单路径下的其余菜单收起
         if (this.props.uniqueOpened) {
