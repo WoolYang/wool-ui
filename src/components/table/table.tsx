@@ -1,7 +1,10 @@
 import * as React from 'react';
 import './style/table.less';
 
-export interface TableProps { compiler: string; framework: string; }
+export interface TableProps {
+    compiler?: string;
+    framework?: string;
+}
 
 export class Table extends React.Component<TableProps, any> {
     render() {

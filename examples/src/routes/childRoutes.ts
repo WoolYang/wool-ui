@@ -8,6 +8,7 @@ import { TransferDemo } from '../components/transfer';
 import { DatePickerDemo } from '../components/datepicker';
 import { SwitchDemo } from '../components/switch';
 import { MenuDemo } from '../components/menu';
+import { TableDemo } from '../components/table';
 
 export const childRoutes: Array<any> = [
     {
@@ -48,6 +49,10 @@ export const childRoutes: Array<any> = [
     {
         'path': '/component/menu',
         'component': MenuDemo
+    },
+    {
+        'path': '/component/table',
+        'component': TableDemo
     }
 
 ];

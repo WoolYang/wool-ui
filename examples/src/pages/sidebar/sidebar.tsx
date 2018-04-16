@@ -35,8 +35,11 @@ export class Sidebar extends React.Component {
                             <Menu.Item index="2-10"><NavLink to='/component/datePicker'>Datepicker日期选择器</NavLink></Menu.Item>
                             <Menu.Item index="2-11"><NavLink to='/component/transfer'>Transfer穿梭框</NavLink></Menu.Item>
                         </Menu.ItemGroup>
+                        <Menu.ItemGroup title="数据">
+                            <Menu.Item index="2-12"><NavLink to='/component/table'>Table表格</NavLink></Menu.Item>
+                        </Menu.ItemGroup>
                         <Menu.ItemGroup title="导航">
-                            <Menu.Item index="2-12"><NavLink to='/component/menu'>meun菜单</NavLink></Menu.Item>
+                            <Menu.Item index="2-13"><NavLink to='/component/menu'>meun菜单</NavLink></Menu.Item>
                         </Menu.ItemGroup>
                     </Menu.SubMenu>
                 </Menu>

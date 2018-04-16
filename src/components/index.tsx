@@ -10,6 +10,7 @@ import { Transfer } from './transfer/index';
 import { DatePicker } from './datePicker/index';
 import { Switch } from './switch/index';
 import { Menu } from './menu/index';
+import { Table } from './table/index';
 
 import "../style/public.less";
 
@@ -30,5 +31,6 @@ export {
     Transfer,
     DatePicker,
     Switch,
-    Menu
+    Menu,
+    Table
 };
