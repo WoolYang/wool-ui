@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import Popover from './popover';
 import './style/tooltip.less';
 
-export type Placement = 'left' | 'right' | 'top' | 'bottom';
+export type Placement = 'left' | 'right' | 'top' | 'bottom' | 'left-start' | 'left-end' | 'right-start' | 'right-end' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
 export type Trigger = 'click' | 'hover';
 
 export interface AbstractPopperProps {
@@ -30,7 +30,7 @@ export class Tooltip extends React.Component<TooltipProps, any>{
         prefixCls: PropTypes.string,
         title: PropTypes.any,
         content: PropTypes.any,
-        placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
+        placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom', 'left-start', 'left-end', 'right-start', 'right-end', 'top-start', 'top-end', 'bottom-start', 'bottom-end']),
         style: PropTypes.object,
         visibleArrow: PropTypes.bool,
         trigger: PropTypes.oneOf(['click', 'hover']),
@@ -58,36 +58,69 @@ export class Tooltip extends React.Component<TooltipProps, any>{
     getPosition() {
         const domNode: any = ReactDOM.findDOMNode(this)
         let { placement } = this.props;
-        let { right, left, top, bottom, width, height } = domNode.getBoundingClientRect();
-        let { clientHeight, clientWidth } = this.container;
-        let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-        let scrollLeft = document.body.scrollLeft || document.documentElement.scrollLeft;
+        let { right, left, top, bottom, width, height } = domNode.getBoundingClientRect(); //dom元素相对于浏览器视口上下左右距离
+        let { clientHeight, clientWidth } = this.container; //dom元素高度和宽度
+        let scrollTop = document.body.scrollTop || document.documentElement.scrollTop; //视口距离顶部距离
+        let scrollLeft = document.body.scrollLeft || document.documentElement.scrollLeft; //视口距离左边距离
+        //计算加上布局尺寸得到绝对尺寸
         top += scrollTop;
         left += scrollLeft;
         right += scrollLeft;
         bottom += scrollTop;
-        if (placement === 'left') {
-            this.style = {
-                left: left - clientWidth + 'px',
-                top: top + (height / 2 - clientHeight / 2) + 'px'
-            }
-        } else if (placement === 'right') {
-            this.style = {
-                left: right + 'px',
-                top: top + (height / 2 - clientHeight / 2) + 'px'
-            }
-        } else if (placement === 'top') {
-            this.style = {
-                top: top - clientHeight + 'px',
-                left: left + (width / 2 - clientWidth / 2) + 'px'
-            }
-        } else if (placement === 'bottom') {
-            this.style = {
-                top: bottom + 'px',
-                left: left + (width / 2 - clientWidth / 2) + 'px'
-            }
+
+        this.style = { visibility: "visible" };
+        switch (placement) {
+            case 'left':
+                this.style.left = left - clientWidth + 'px';
+                this.style.top = top + (height - clientHeight) / 2 + 'px'; //获取两个dom元素之间的留白尺寸折半实现居中
+                break;
+            case 'right':
+                this.style.left = right + 'px';
+                this.style.top = top + (height - clientHeight) / 2 + 'px';
+                break;
+            case 'top':
+                this.style.top = top - clientHeight + 'px';
+                this.style.left = left + (width - clientWidth) / 2 + 'px';
+                break;
+            case 'bottom':
+                this.style.top = bottom + 'px';
+                this.style.left = left + (width - clientWidth) / 2 + 'px';
+                break;
+            case 'left-start':
+                this.style.left = left - clientWidth + 'px';
+                this.style.top = top + 'px'; //获取两个dom元素之间的留白尺寸折半实现居中
+                break;
+            case 'left-end':
+                this.style.left = left - clientWidth + 'px';
+                this.style.top = top + (height - clientHeight) + 'px'; //获取两个dom元素之间的留白尺寸折半实现居中
+                break;
+            case 'right-start':
+                this.style.left = right + 'px';
+                this.style.top = top + 'px';
+                break;
+            case 'right-end':
+                this.style.left = right + 'px';
+                this.style.top = top + (height - clientHeight) + 'px';
+                break;
+            case 'top-start':
+                this.style.top = top - clientHeight + 'px';
+                this.style.left = left + 'px';
+                break;
+            case 'top-end':
+                this.style.top = top - clientHeight + 'px';
+                this.style.left = left + (width - clientWidth) + 'px';
+                break;
+            case 'bottom-start':
+                this.style.top = bottom + 'px';
+                this.style.left = left + 'px';
+                break;
+            case 'bottom-end':
+                this.style.top = bottom + 'px';
+                this.style.left = left + (width - clientWidth) + 'px';
+                break;
         }
-        this.style.visibility = "visible";
+
+
     }
 
     createComponent = () => {

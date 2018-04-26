@@ -31,39 +31,63 @@
         display: inline-block;
         position: relative;
         &.top,
-        &.bottom {
+        &.top-start,
+        &.top-end,
+        &.bottom,
+        &.bottom-start,
+        &.bottom-end {
             padding: 10px 0;
         }
         &.left,
-        &.right {
+        &.right,
+        &.left-start,
+        &.left-end,
+        &.right-start,
+        &.right-end {
             padding: 0 10px;
         }
-        &.left:after {
+        &.left:after,
+        &.left-start:after,
+        &.left-end:after {
             &:extend(.wool-popover-common-icon);
             &:extend(.triangle);
             top: 50%;
             right: 2px;
             transform: rotate(90deg);
         }
-        &.right:after {
+        &.right:after,
+        &.right-start:after,
+        &.right-end:after {
             &:extend(.wool-popover-common-icon);
             &:extend(.triangle);
             top: 50%;
             left: 2px;
             transform: rotate(-90deg);
         }
-        &.top:after {
+        &.top:after,
+        &.top-start:after,
+        &.top-end:after {
             &:extend(.wool-popover-common-icon);
             &:extend(.triangle);
             top: 38px;
             right: 50%;
             transform: rotate(180deg);
         }
-        &.bottom:after {
+        &.bottom:after,
+        &.bottom-start:after,
+        &.bottom-end:after {
             &:extend(.wool-popover-common-icon);
             &:extend(.triangle);
             top: 6px;
             right: 50%;
+        }
+        &.top-start:after,
+        &.bottom-start:after {
+            right: 85%;
+        }
+        &.top-end:after,
+        &.bottom-end:after {
+            right: 10%;
         }
     }
     .@{popover}-inner {
