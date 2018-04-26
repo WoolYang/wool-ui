@@ -23,6 +23,8 @@ export interface ButtonProps {
     className?: string;  //class
     prefixCls?: string;  //前缀
     children?: React.ReactNode;
+    onMouseEnter?: React.FormEventHandler<any>;
+    onMouseLeave?: React.FormEventHandler<any>;
 }
 
 export class Button extends React.Component<ButtonProps, any> {
@@ -55,12 +57,26 @@ export class Button extends React.Component<ButtonProps, any> {
         onClick: PropTypes.func,
         className: PropTypes.string,
         style: PropTypes.object,
-        prefixCls: PropTypes.string
+        prefixCls: PropTypes.string,
+        onMouseEnter: PropTypes.func,
+        onMouseLeave: PropTypes.func
     };
 
     handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         this.props.onClick(e);
     }
+
+    handleMouseEnter = (e: any) => {
+        console.log(11)
+        const { onMouseEnter } = this.props;
+        onMouseEnter && onMouseEnter(e);
+    }
+
+    handleMouseLeave = (e: any) => {
+        const { onMouseLeave } = this.props;
+        onMouseLeave && onMouseLeave(e);
+    }
+
 
     render() {
 
@@ -101,6 +117,8 @@ export class Button extends React.Component<ButtonProps, any> {
             autoFocus={autofocus}
             style={style}
             onClick={this.handleClick}
+            onMouseEnter={this.handleMouseEnter}
+            onMouseLeave={this.handleMouseLeave}
         >
             {loadNode}{iconNode}{children}
         </button>;

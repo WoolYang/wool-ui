@@ -1,3 +1,3 @@
-import { Tooltip } from './toolTip'
+import { Tooltip } from './tooltip'
 
 export { Tooltip }

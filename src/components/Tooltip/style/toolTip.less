@@ -1,2 +1,80 @@
 @import "../../../style/variables";
-@popper: wool-popper;
+@popover: wool-popover;
+.wool-popover-common-icon {
+    content: '';
+    top: 50%;
+    right: 10px;
+    margin-top: -3px;
+    position: absolute;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-right: 5px solid transparent;
+    border-bottom: 7px solid rgba(0, 0, 0, .8);
+    border-left: 5px solid transparent;
+}
+
+.@{popover}-wrapper {
+    top: -9999px;
+    left: -9999px;
+    z-index: 9999;
+    display: block;
+    text-align: center;
+    position: absolute;
+    &.@{popover}-wrapper_ctn {
+        min-width: 50px;
+    }
+    .@{popover} {
+        text-align: left;
+        display: inline-block;
+        position: relative;
+        &.top,
+        &.bottom {
+            padding: 10px 0;
+        }
+        &.left,
+        &.right {
+            padding: 0 10px;
+        }
+        &.left:after {
+            &:extend(.wool-popover-common-icon);
+            &:extend(.triangle);
+            top: 50%;
+            right: 2px;
+            transform: rotate(90deg);
+        }
+        &.right:after {
+            &:extend(.wool-popover-common-icon);
+            &:extend(.triangle);
+            top: 50%;
+            left: 2px;
+            transform: rotate(-90deg);
+        }
+        &.top:after {
+            &:extend(.wool-popover-common-icon);
+            &:extend(.triangle);
+            top: 38px;
+            right: 50%;
+            transform: rotate(180deg);
+        }
+        &.bottom:after {
+            &:extend(.wool-popover-common-icon);
+            &:extend(.triangle);
+            top: 6px;
+            right: 50%;
+        }
+    }
+    .@{popover}-inner {
+        color: #fff;
+        line-height: 1;
+        padding: 6px;
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, .8);
+    }
+    .@{popover}-body {
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+}
