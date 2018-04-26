@@ -5,6 +5,7 @@ export type Placement = 'left' | 'right' | 'top' | 'bottom';
 export type Trigger = 'click' | 'hover';
 
 export interface AbstractPopperProps {
+    prefixCls?: string;
     title?: string | React.ReactNode;
     content?: string | React.ReactNode;
     placement?: Placement;
@@ -12,14 +13,15 @@ export interface AbstractPopperProps {
     visibleArrow?: boolean;
 }
 
-export interface ToolTipProps extends AbstractPopperProps {
+export interface TooltipProps extends AbstractPopperProps {
     trigger?: Trigger;
     hideTrigger?: Trigger;
     openDelay?: number;
 }
 
-export class ToolTip extends React.Component<ToolTipProps, any>{
+export class Tooltip extends React.Component<TooltipProps, any>{
     static propTypes = {
+        prefixCls: PropTypes.string,
         title: PropTypes.any,
         content: PropTypes.any,
         placement: PropTypes.oneOf(['left', 'right', 'top', 'bottom']),
@@ -31,10 +33,19 @@ export class ToolTip extends React.Component<ToolTipProps, any>{
     }
 
     static defaultProps = {
+        prefixCls: 'wool-tooltip',
         trigger: 'hover',
         hideTrigger: 'hover',
         placement: "left",
         visibleArrow: true,
         openDelay: 0
+    }
+
+    render() {
+        const { children, trigger, hideTrigger } = this.props;
+        const child = React.isValidElement(children) ? children : <span>{children}</span>;
+        let props = {};
+
+        return React.cloneElement(child, props);
     }
 }

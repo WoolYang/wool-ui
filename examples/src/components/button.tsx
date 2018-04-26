@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Hello, Button, Icon } from '../../../src/components/index';
 
 export class ButtonDemo extends React.Component {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Select, Option } from '../../../src/components/index';
 
 export interface SelectDemoProps {

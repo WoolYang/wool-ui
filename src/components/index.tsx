@@ -11,6 +11,7 @@ import { DatePicker } from './datePicker/index';
 import { Switch } from './switch/index';
 import { Menu } from './menu/index';
 import { Table } from './table/index';
+import { Tooltip } from './tooltip/index';
 
 import "../style/public.less";
 
@@ -32,5 +33,6 @@ export {
     DatePicker,
     Switch,
     Menu,
-    Table
+    Table,
+    Tooltip
 };

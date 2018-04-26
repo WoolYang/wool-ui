@@ -41,6 +41,9 @@ export class Sidebar extends React.Component {
                         <Menu.ItemGroup title="导航">
                             <Menu.Item index="2-13"><NavLink to='/component/menu'>meun菜单</NavLink></Menu.Item>
                         </Menu.ItemGroup>
+                        <Menu.ItemGroup title="其他">
+                            <Menu.Item index="2-14"><NavLink to='/component/tooltip'>Tooltop提示</NavLink></Menu.Item>
+                        </Menu.ItemGroup>
                     </Menu.SubMenu>
                 </Menu>
             </div>

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Menu } from '../../../src/components/index';
 
 export class MenuDemo extends React.Component {

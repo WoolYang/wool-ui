@@ -9,6 +9,7 @@ import { DatePickerDemo } from '../components/datepicker';
 import { SwitchDemo } from '../components/switch';
 import { MenuDemo } from '../components/menu';
 import { TableDemo } from '../components/table';
+import { TooltipDemo } from '../components/Tooltip';
 
 export const childRoutes: Array<any> = [
     {
@@ -53,6 +54,9 @@ export const childRoutes: Array<any> = [
     {
         'path': '/component/table',
         'component': TableDemo
+    },
+    {
+        'path': '/component/tooltip',
+        'component': TooltipDemo
     }
-
 ];
