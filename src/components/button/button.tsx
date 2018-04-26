@@ -67,7 +67,6 @@ export class Button extends React.Component<ButtonProps, any> {
     }
 
     handleMouseEnter = (e: any) => {
-        console.log(11)
         const { onMouseEnter } = this.props;
         onMouseEnter && onMouseEnter(e);
     }
