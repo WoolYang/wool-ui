@@ -9,7 +9,8 @@ import { DatePickerDemo } from '../components/datepicker';
 import { SwitchDemo } from '../components/switch';
 import { MenuDemo } from '../components/menu';
 import { TableDemo } from '../components/table';
-import { TooltipDemo } from '../components/Tooltip';
+import { TooltipDemo } from '../components/tooltip';
+import { MessageDemo } from '../components/message';
 
 export const childRoutes: Array<any> = [
     {
@@ -58,5 +59,10 @@ export const childRoutes: Array<any> = [
     {
         'path': '/component/tooltip',
         'component': TooltipDemo
+    },
+    {
+        'path': '/component/message',
+        'component': MessageDemo
     }
+
 ];

@@ -28,7 +28,7 @@ export class Transition extends React.Component<TransitionProps, any> {
     }
 
     componentDidMount() {
-        this.toggleHidden()
+        this.toggleInit()
     }
 
     componentWillReceiveProps(nextProps: TransitionProps) {
@@ -189,6 +189,25 @@ export class Transition extends React.Component<TransitionProps, any> {
             childDOM.classList.add(leave, leaveActive);
 
             onLeave && onLeave();
+
+            requestAnimationFrame(() => {
+                childDOM.classList.remove(leave);
+                childDOM.classList.add(leaveTo);
+            })
+        })
+    }
+
+    toggleInit() {
+        const { leave, leaveActive, leaveTo, enterActive, enterTo } = this.transitionClass;
+        const childDOM: any = ReactDOM.findDOMNode(this.el);
+        childDOM.classList.add(leave, leaveActive);
+
+        requestAnimationFrame(() => {
+            if (childDOM.classList.contains(enterActive)) {
+                childDOM.classList.remove(enterActive, enterTo);
+            }
+
+            childDOM.classList.add(leave, leaveActive);
 
             requestAnimationFrame(() => {
                 childDOM.classList.remove(leave);

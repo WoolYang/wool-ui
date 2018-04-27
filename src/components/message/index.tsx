@@ -1,3 +1,3 @@
-import { message } from './message';
+import { Message } from './message';
 
-export { message };
+export { Message };

@@ -12,6 +12,7 @@ import { Switch } from './switch/index';
 import { Menu } from './menu/index';
 import { Table } from './table/index';
 import { Tooltip } from './tooltip/index';
+import { Message } from './message/index';
 
 import "../style/public.less";
 
@@ -34,5 +35,6 @@ export {
     Switch,
     Menu,
     Table,
-    Tooltip
+    Tooltip,
+    Message
 };

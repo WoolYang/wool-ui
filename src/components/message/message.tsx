@@ -12,6 +12,7 @@ export interface ToastProps {
     customClass?: string;
     iconClass?: string;
     onClose?: any;
+    prefixCls?: string;
 }
 
 export const Message: any = (props: ToastProps, type: Type) => {
