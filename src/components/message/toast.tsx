@@ -60,20 +60,20 @@ export default class Toast extends React.Component<any, any> {
     }
 
     render() {
-        const { iconClass, customClass, prefixCls, message, showClose } = this.props;
+        const { iconClass, customClass, prefixCls, message, showClose, type } = this.props;
 
         return (
             <Transition name={`${prefixCls}-fade`} onLeave={() => { this.props.willUnmount(); }}>
                 <View show={this.state.visible}>
                     <div className={classNames(`${prefixCls}`, customClass)} onMouseEnter={this.stopTimer} onMouseLeave={this.startTimer}>
 
-                        <div className={classNames(`${prefixCls}__group`, { 'is-with-icon': iconClass })}>
+                        <div className={classNames(`${prefixCls}__group ${type}`, { 'is-with-icon': iconClass })}>
                             {
                                 iconClass ? <i className={classNames(`${prefixCls}__icon`, iconClass)}></i> :
                                     <i className={classNames(`${prefixCls}__icon`, iconClass)}></i>
                             }
                             <p>{message}</p>
-                            {showClose && <div className={`${prefixCls}__closeBtn el-icon-close`} onClick={this.onClose}></div>}
+                            {showClose && <div className={`${prefixCls}_icon-close`} onClick={this.onClose}></div>}
                         </div>
                     </div>
                 </View>
